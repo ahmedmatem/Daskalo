@@ -1,4 +1,4 @@
-﻿namespace Daskalo.Infrastructure.Constants
+﻿namespace Daskalo.Infrastructure.Data.Constants
 {
     /// <summary>
     /// Contains constants about the data models.

@@ -1,5 +1,4 @@
-﻿
-namespace Daskalo.Infrastructure.Contracts
+﻿namespace Daskalo.Infrastructure.Data.Contracts
 {
     public interface IDeletable
     {

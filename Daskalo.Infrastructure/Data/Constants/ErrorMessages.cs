@@ -1,5 +1,4 @@
-﻿
-namespace Daskalo.Infrastructure.Constants
+﻿namespace Daskalo.Infrastructure.Data.Constants
 {
     public static class ErrorMessages
     {

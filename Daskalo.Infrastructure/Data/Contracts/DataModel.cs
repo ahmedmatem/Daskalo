@@ -1,8 +1,7 @@
-﻿
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 
-namespace Daskalo.Infrastructure.Contracts
+namespace Daskalo.Infrastructure.Data.Contracts
 {
     public class DataModel : IAuditable, IDeletable
     {
