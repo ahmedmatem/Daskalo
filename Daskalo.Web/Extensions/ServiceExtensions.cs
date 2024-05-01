@@ -1,0 +1,45 @@
+﻿using Daskalo.Infrastructure.Data;
+using Daskalo.Infrastructure.Data.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+
+namespace Daskalo.Web.Extensions
+{
+    public static class ServiceExtensions
+    {
+        public static IServiceCollection AddApplicationServices(this IServiceCollection services)
+        {
+
+            return services;
+        }
+
+        public static IServiceCollection AddApplicationDbContext(
+            this IServiceCollection services,
+            IConfiguration configuration)
+        {
+            var connectionString = configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+            services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseSqlServer(connectionString))
+                .AddDatabaseDeveloperPageExceptionFilter();
+
+            return services;
+        }
+
+        public static IServiceCollection AddApplicationIdentity(this IServiceCollection services)
+        {
+            services.AddDefaultIdentity<ApplicationUser>(
+                options =>
+                {
+                    options.SignIn.RequireConfirmedEmail = false;
+                    options.Password.RequireDigit = false;
+                    options.Password.RequireNonAlphanumeric = false;
+                    options.Password.RequireUppercase = false;
+                    options.Password.RequireLowercase = false;
+                })
+                .AddRoles<IdentityRole>()
+                .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            return services;
+        }
+    }
+}
