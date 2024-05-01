@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Daskalo.Infrastructure\Daskalo.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>
