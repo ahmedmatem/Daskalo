@@ -1,12 +1,13 @@
 ﻿
 namespace Daskalo.Infrastructure.Data.Types
 {
+    [Flags]
     public enum Role
     {
-        Admin = 0,
-        SchoolAdmin = 1,
-        Teacher = 2,
-        Student = 3,
-        Parent = 4
+        Admin =  1,
+        SchoolAdmin = 2,
+        Teacher = 4,
+        Student = 8,
+        Parent = 16
     }
 }
