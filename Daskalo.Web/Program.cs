@@ -1,11 +1,12 @@
 using Daskalo.Web.Extensions;
 using Microsoft.AspNetCore.Mvc;
+using static Daskalo.Core.Constants.AdministratorConstants;
 
 namespace Daskalo.Web
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
@@ -41,7 +42,7 @@ namespace Daskalo.Web
 
             app.MapAreaControllerRoute(
                   name: "Admin",
-                  areaName: "Admin",
+                  areaName: AdminAreaName,
                   pattern: "admin/{controller=Home}/{action=Index}/{id?}"
                 );
 
@@ -49,7 +50,9 @@ namespace Daskalo.Web
 
             app.MapRazorPages();
 
-            app.Run();
+            await app.CreateAdminRoleAsync();
+
+            await app.RunAsync();
         }
     }
 }
