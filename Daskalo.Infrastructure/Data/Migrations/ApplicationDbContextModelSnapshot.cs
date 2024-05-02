@@ -310,7 +310,6 @@ namespace Daskalo.Infrastructure.Data.Migrations
                         .HasComment("School name.");
 
                     b.Property<string>("SchoolAdminId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)")
                         .HasComment("Unique identifier of the school administrator.");
 
@@ -323,9 +322,48 @@ namespace Daskalo.Infrastructure.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("SchoolAdminId")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[SchoolAdminId] IS NOT NULL");
 
                     b.ToTable("School");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "4ac5d0f7-e63f-4754-aa31-bb42a973fe0d",
+                            City = "Разград",
+                            CreatedOn = new DateTime(2024, 5, 2, 22, 47, 32, 836, DateTimeKind.Local).AddTicks(5274),
+                            IsDeleted = false,
+                            Name = "Акад. Никола Обрешков",
+                            Type = "ППМГ"
+                        },
+                        new
+                        {
+                            Id = "683358ad-2f85-4631-8c64-517bf0a70c6a",
+                            City = "Разград",
+                            CreatedOn = new DateTime(2024, 5, 2, 22, 47, 32, 839, DateTimeKind.Local).AddTicks(9492),
+                            IsDeleted = false,
+                            Name = "Никола Йонков Вапцаров",
+                            Type = "ОУ"
+                        },
+                        new
+                        {
+                            Id = "c164aec3-d77b-4ef7-853e-3cfb8bb5b156",
+                            City = "Разград",
+                            CreatedOn = new DateTime(2024, 5, 2, 22, 47, 32, 839, DateTimeKind.Local).AddTicks(9596),
+                            IsDeleted = false,
+                            Name = "Екзарх Йосиф",
+                            Type = "ГПИЧЕ"
+                        },
+                        new
+                        {
+                            Id = "a53b255c-dabc-49d5-a2c5-6f890725f612",
+                            City = "Разград",
+                            CreatedOn = new DateTime(2024, 5, 2, 22, 47, 32, 839, DateTimeKind.Local).AddTicks(9610),
+                            IsDeleted = false,
+                            Name = "Васил Левски",
+                            Type = "ОУ"
+                        });
                 });
 
             modelBuilder.Entity("Daskalo.Infrastructure.Data.Models.Topic", b =>
@@ -469,6 +507,29 @@ namespace Daskalo.Infrastructure.Data.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "e7557676-0429-43b7-8e91-83caf6b739a2",
+                            ConcurrencyStamp = "e7557676-0429-43b7-8e91-83caf6b739a2",
+                            Name = "Admin",
+                            NormalizedName = "ADMIN"
+                        },
+                        new
+                        {
+                            Id = "25e0c93c-b7c3-4f2f-8a25-716b92047522",
+                            ConcurrencyStamp = "25e0c93c-b7c3-4f2f-8a25-716b92047522",
+                            Name = "SchoolAdmin",
+                            NormalizedName = "SCHOOLADMIN"
+                        },
+                        new
+                        {
+                            Id = "1825fe4f-38f5-49c6-b5e5-93121d91b541",
+                            ConcurrencyStamp = "1825fe4f-38f5-49c6-b5e5-93121d91b541",
+                            Name = "Teacher",
+                            NormalizedName = "TEACHER"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -632,6 +693,13 @@ namespace Daskalo.Infrastructure.Data.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "bac209f5-c786-4b72-8ca4-9099bba9085b",
+                            RoleId = "e7557676-0429-43b7-8e91-83caf6b739a2"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -677,6 +745,312 @@ namespace Daskalo.Infrastructure.Data.Migrations
                     b.HasIndex("SchoolId");
 
                     b.HasDiscriminator().HasValue("ApplicationUser");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "bac209f5-c786-4b72-8ca4-9099bba9085b",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "52c26068-1573-4508-a020-e885b61302d9",
+                            Email = "admin@mail.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "ADMIN@MAIL.COM",
+                            NormalizedUserName = "ADMIN@MAIL.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEPBAQKanmrsT7S+7vb2nGjeKZAK+/CgqackKNvz7/izQ7fcr5VmJ8RvDPVtexGcHbw==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "7a7c8b3a-031d-4e6c-a4b4-9049cd0da409",
+                            TwoFactorEnabled = false,
+                            UserName = "admin@mail.com",
+                            FullName = "Ахмед Матем Ахмед",
+                            Role = 0,
+                            SchoolId = "4ac5d0f7-e63f-4754-aa31-bb42a973fe0d"
+                        },
+                        new
+                        {
+                            Id = "1cd8e759-b2ac-422b-a8a2-ec085f052ed5",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "842f33bd-866a-43f4-90bc-59663c2fde30",
+                            Email = "ahmed@gmail.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "AHMED@GMAIL.COM",
+                            NormalizedUserName = "AHMED@GMAIL.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAECGLCYeT6OFYjtqCf0lFZ7Gg6LEW2e7wjPzVv17Z+V/hyaqSLvwx4fBZ8XpvVKKR3w==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "af53859a-da36-476b-8b96-6e05fe8fb510",
+                            TwoFactorEnabled = false,
+                            UserName = "ahmed@gmail.com",
+                            FullName = "Ахмед Матем Ахмед",
+                            Role = 2,
+                            SchoolId = "4ac5d0f7-e63f-4754-aa31-bb42a973fe0d"
+                        },
+                        new
+                        {
+                            Id = "79fb1a05-fa56-4e5c-9f46-4fcd9ce1181b",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "f027ba53-f637-4216-b8f9-b2d9420c0bef",
+                            Email = "turhan@gmail.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "TURHAN@GMAIL.COM",
+                            NormalizedUserName = "TURHAN@GMAIL.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEMz48jOtzdxelLEnmp9/zMC04mBIyIIOojhBY8oGyu2JsnDEixfXw8J7jrA3YkmH6Q==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "5821ae0f-4c2a-43bf-86ed-8fb3e9065a93",
+                            TwoFactorEnabled = false,
+                            UserName = "turhan@gmail.com",
+                            FullName = "Турхан Мюмюнов Сюлейманов",
+                            Role = 2,
+                            SchoolId = "4ac5d0f7-e63f-4754-aa31-bb42a973fe0d"
+                        },
+                        new
+                        {
+                            Id = "8495638b-be7e-41cd-b473-befe2b80f61b",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "b59c2902-1fa4-4c48-a13d-63a3c850cc61",
+                            Email = "martin@gmail.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "MARTIN@GMAIL.COM",
+                            NormalizedUserName = "MARTIN@GMAIL.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEOmazqWpG6fYrSMjQO8QZ1CKpXBjE2Vo0xkW2zEs8fhSxnL8pCWOfyZAbhcXnaFMkg==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "c4a6e731-dd98-4f2b-bca4-8dd549ba97a0",
+                            TwoFactorEnabled = false,
+                            UserName = "martin@gmail.com",
+                            FullName = "Мартин Иванов Катев",
+                            Role = 2,
+                            SchoolId = "4ac5d0f7-e63f-4754-aa31-bb42a973fe0d"
+                        },
+                        new
+                        {
+                            Id = "90b6c754-e41a-4794-a7ac-e0cde40f372b",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "e7163ad7-66d0-46f6-8a41-b57555533217",
+                            Email = "desi@gmail.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "DESI@GMAIL.COM",
+                            NormalizedUserName = "DESI@GMAIL.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEJNDFyDB7IJASSiPL7f6Yot1SkEUBnLuVzFqwVerrUOLeCz3Um36dWKTJKP96CEjgA==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "9654d093-dc12-47b6-80d0-5d67c75f3d2b",
+                            TwoFactorEnabled = false,
+                            UserName = "desi@gmail.com",
+                            FullName = "Десислава Иванова Петкова",
+                            Role = 2,
+                            SchoolId = "4ac5d0f7-e63f-4754-aa31-bb42a973fe0d"
+                        },
+                        new
+                        {
+                            Id = "a3bcfd03-9bc9-4d98-9436-09f1bc813797",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "92172383-596a-4891-8f22-ea6a89b74f0c",
+                            Email = "venci@gmail.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "VENCI@GMAIL.COM",
+                            NormalizedUserName = "VENCI@GMAIL.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEKdrPzVInGMBGPurgTiGicnnvJl2KoJ1E3fsZUKvYgewiB+GOEi4QYcwcrCRSP7HtA==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "e88e86cf-95b7-49ce-a3e2-53e5e7bf267d",
+                            TwoFactorEnabled = false,
+                            UserName = "venci@gmail.com",
+                            FullName = "Ахмед Матем Ахмед",
+                            Role = 2,
+                            SchoolId = "4ac5d0f7-e63f-4754-aa31-bb42a973fe0d"
+                        },
+                        new
+                        {
+                            Id = "a1b573df-e30a-4991-bcc6-66167a7cf595",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "51e2f41d-ccf2-48d8-a179-c9d44ad1420b",
+                            Email = "baran@gmail.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "BARAN@GMAIL.COM",
+                            NormalizedUserName = "BARAN@GMAIL.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEI7aq6WVfbk09HorLmX0tqPT4Ygod6f3eGXT+5LroWa+VyuDoEcKZ2QIkSmmvtZ4ng==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "f9e3c2fb-1dec-4f07-ac5a-3b20f22e0692",
+                            TwoFactorEnabled = false,
+                            UserName = "baran@gmail.com",
+                            FullName = "Баран Б. Бехчет",
+                            Role = 3,
+                            SchoolId = "4ac5d0f7-e63f-4754-aa31-bb42a973fe0d"
+                        },
+                        new
+                        {
+                            Id = "493b59a6-290f-424c-a733-fc43712f5ab4",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "de0b407a-712a-4340-9eaf-ce130f45c4db",
+                            Email = "viktoriya@gmail.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "VIKTORIYA@GMAIL.COM",
+                            NormalizedUserName = "VIKTORIYA@GMAIL.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEFnOxpHtLepRFlBqR/Uv08htf996kEAjrking3hMbtn/MRovr0PewIapyl8jtYPImw==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "301c9429-4935-4e7b-8343-0c37ee314fe4",
+                            TwoFactorEnabled = false,
+                            UserName = "viktoriya@gmail.com",
+                            FullName = "Виктория К. Петкова",
+                            Role = 3,
+                            SchoolId = "4ac5d0f7-e63f-4754-aa31-bb42a973fe0d"
+                        },
+                        new
+                        {
+                            Id = "5ad9dc51-dad1-40f9-b060-c50f3b5acad1",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "551d216b-334a-4d7e-a2e5-8b4a6c992dca",
+                            Email = "viki@gmail.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "VIKI@GMAIL.COM",
+                            NormalizedUserName = "VIKI@GMAIL.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEIIt3Y6qxIiO0bKQcpTRm2DuJ0BoQonAqCsgAZjJglE7Op6adpoN4u5MpoPx/kQNdQ==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "6dd6755e-3baf-4037-a49a-bc452a4fbfe5",
+                            TwoFactorEnabled = false,
+                            UserName = "viki@gmail.com",
+                            FullName = "Виктория Р. Маркова",
+                            Role = 3,
+                            SchoolId = "4ac5d0f7-e63f-4754-aa31-bb42a973fe0d"
+                        },
+                        new
+                        {
+                            Id = "888c0487-c196-47af-a207-5aa71ae38b44",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "62ddad09-6d37-4902-a361-2b116f945855",
+                            Email = "daniel@gmail.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "DANIEL@GMAIL.COM",
+                            NormalizedUserName = "DANIEL@GMAIL.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEELqAxNZz7unj5kde5O5lbtXzYJr+UZKUPXJgrVGcC6tmB04CsKV6broKvQAjBwPrw==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "3df9d43b-10b5-4fc3-9dca-ef9cd37aca19",
+                            TwoFactorEnabled = false,
+                            UserName = "daniel@gmail.com",
+                            FullName = "Даниел Г. Христов",
+                            Role = 3,
+                            SchoolId = "4ac5d0f7-e63f-4754-aa31-bb42a973fe0d"
+                        },
+                        new
+                        {
+                            Id = "3cc5c698-b1d0-440a-8f2a-496436f3ed8d",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "6845770a-bba3-4538-8ae1-7c38d55553c0",
+                            Email = "dani@gmail.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "DANI@GMAIL.COM",
+                            NormalizedUserName = "DANI@GMAIL.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEPCO9YmKOS02g7uXFBqJ0kYFgaVRQeyXt1zPlkU70pn/Ym/2hOH9dULuh/Kn2IGCCg==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "71adc8ef-5b62-413d-8855-b871741e6c55",
+                            TwoFactorEnabled = false,
+                            UserName = "dani@gmail.com",
+                            FullName = "Даниел П. Петров",
+                            Role = 3,
+                            SchoolId = "4ac5d0f7-e63f-4754-aa31-bb42a973fe0d"
+                        },
+                        new
+                        {
+                            Id = "e43e1471-254c-4a12-b755-dc80fb1d2224",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "19535697-506e-4fb7-9813-76a7866614d0",
+                            Email = "dimana@gmail.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "DIMANA@GMAIL.COM",
+                            NormalizedUserName = "DIMANA@GMAIL.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEMcTDVFe9zkajmCkbzAnkwQRAsKmbZYZidnN5c+S88IZ12mNm9BNADOqzPDc0M0flg==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "330a5762-7a14-4570-bdc6-8d422d7e24d9",
+                            TwoFactorEnabled = false,
+                            UserName = "dimana@gmail.com",
+                            FullName = "Димана В. Кънчева",
+                            Role = 3,
+                            SchoolId = "4ac5d0f7-e63f-4754-aa31-bb42a973fe0d"
+                        },
+                        new
+                        {
+                            Id = "e1e5c760-ec84-4abc-b9f3-cc79835a3aac",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "55a698fd-991e-4814-96b1-89b13a4dc4ae",
+                            Email = "dimitar@gmail.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "DIMITAR@GMAIL.COM",
+                            NormalizedUserName = "DIMITAR@GMAIL.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEN57CHEhquEL0nbziJ3sNr4FPLYfzRI6gii2H/wow/caX5ZTGfm96RMuILbbFfwXHw==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "f8b40278-30bd-4432-8d26-7b7d3d97755a",
+                            TwoFactorEnabled = false,
+                            UserName = "dimitar@gmail.com",
+                            FullName = "Димитър Н. Димитров",
+                            Role = 3,
+                            SchoolId = "4ac5d0f7-e63f-4754-aa31-bb42a973fe0d"
+                        },
+                        new
+                        {
+                            Id = "ea3aa364-fffc-493f-938e-222f0068a745",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "dd43112b-adbd-4703-91b1-d9622347d8d7",
+                            Email = "emre@gmail.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "EMRE@GMAIL.COM",
+                            NormalizedUserName = "EMRE@GMAIL.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEKcjDcX/YuzYdw1MbEl7l7tFora4JE0HOuPkVFuJhqNX46Sef0xNB6hu4MEgyw4X/Q==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "1eaaaa98-0d80-4e3b-9f76-576ac1f95c61",
+                            TwoFactorEnabled = false,
+                            UserName = "emre@gmail.com",
+                            FullName = "Емре Е. Хюсеин",
+                            Role = 3,
+                            SchoolId = "4ac5d0f7-e63f-4754-aa31-bb42a973fe0d"
+                        },
+                        new
+                        {
+                            Id = "1cecd217-a02c-4b4d-8c36-1024ef36df90",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "90c74b5d-2843-4d78-a5eb-52b4efa79894",
+                            Email = "ivayla@gmail.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "IVAYLA@GMAIL.COM",
+                            NormalizedUserName = "IVAYLA@GMAIL.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEJqQ/sZZ+T/DvKPMiOLj0mJF1m0aAvXRiwK61gHTx+K3A6fnD93urBTZ/6DJnku/nQ==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "681664ee-f844-40a1-a1e8-13082e02fd12",
+                            TwoFactorEnabled = false,
+                            UserName = "ivayla@gmail.com",
+                            FullName = "Ивайла Д. Александрова",
+                            Role = 3,
+                            SchoolId = "4ac5d0f7-e63f-4754-aa31-bb42a973fe0d"
+                        },
+                        new
+                        {
+                            Id = "fbb3e516-0ec3-4652-9731-daed5b9a2594",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "21eba3a3-550f-4a8e-8666-c6103c39a238",
+                            Email = "ivan@gmail.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "IVAN@GMAIL.COM",
+                            NormalizedUserName = "IVAN@GMAIL.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEKOCJ6NaBYppK+GniNc7ho2yTvtO52WU15kd2U8Ir1QEVBtTloDEPp6XtNRDIF0n0Q==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "f8abaae6-ce0a-4e69-984b-b20bec42656a",
+                            TwoFactorEnabled = false,
+                            UserName = "ivan@gmail.com",
+                            FullName = "Иван Д. Генчев",
+                            Role = 3,
+                            SchoolId = "4ac5d0f7-e63f-4754-aa31-bb42a973fe0d"
+                        });
                 });
 
             modelBuilder.Entity("Daskalo.Infrastructure.Data.Models.Group", b =>
@@ -762,9 +1136,7 @@ namespace Daskalo.Infrastructure.Data.Migrations
                 {
                     b.HasOne("Daskalo.Infrastructure.Data.Models.ApplicationUser", "SchoolAdmin")
                         .WithOne("School")
-                        .HasForeignKey("Daskalo.Infrastructure.Data.Models.School", "SchoolAdminId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("Daskalo.Infrastructure.Data.Models.School", "SchoolAdminId");
 
                     b.Navigation("SchoolAdmin");
                 });

@@ -3,7 +3,6 @@ using Daskalo.Infrastructure.Data.Types;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
-using System.Text.RegularExpressions;
 using static Daskalo.Infrastructure.Data.Constants.DataConstants;
 using static Daskalo.Infrastructure.Data.Constants.ErrorMessages;
 

@@ -16,7 +16,6 @@ namespace Daskalo.Infrastructure.Data.Models
         /// Unique identifier of the school administrator.
         /// NULL means that the school has not administrator yet.
         /// </summary>
-        [Required]
         [ForeignKey("SchoolAdmin")]
         [Comment("Unique identifier of the school administrator.")]
         public string? SchoolAdminId { get; set; }

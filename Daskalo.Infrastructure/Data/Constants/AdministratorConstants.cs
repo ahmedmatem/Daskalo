@@ -1,5 +1,5 @@
 ﻿
-namespace Daskalo.Core.Constants
+namespace Daskalo.Infrastructure.Data.Constants
 {
     public static class AdministratorConstants
     {

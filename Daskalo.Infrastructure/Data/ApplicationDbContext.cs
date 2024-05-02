@@ -19,6 +19,10 @@ namespace Daskalo.Infrastructure.Data
             builder.ApplyConfiguration(new GroupEntityTypeConfiguration());
             builder.ApplyConfiguration(new TopicEntityTypeConfiguration());
 
+            builder.ApplyConfiguration(new IdentityRoleEntityTypeConfiguration());
+            builder.ApplyConfiguration(new IdentityEntityTypeConfiguration());
+            builder.ApplyConfiguration(new IdentityUserRoleEntityTypeConfiguration());
+
             base.OnModelCreating(builder);
         }
 

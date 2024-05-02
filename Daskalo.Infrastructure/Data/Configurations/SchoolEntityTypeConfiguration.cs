@@ -2,6 +2,7 @@
 using Daskalo.Infrastructure.Data.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using static Daskalo.Infrastructure.Data.Configurations.SeedHelper;
 
 namespace Daskalo.Infrastructure.Data.Configurations
 {
@@ -15,6 +16,8 @@ namespace Daskalo.Infrastructure.Data.Configurations
                 .HasForeignKey(s => s.SchoolId)
                 .IsRequired()
                 .OnDelete(DeleteBehavior.NoAction);
+
+            builder.HasData(Schools);
         }
     }
 }

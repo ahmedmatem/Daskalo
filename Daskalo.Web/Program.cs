@@ -1,6 +1,6 @@
 using Daskalo.Web.Extensions;
 using Microsoft.AspNetCore.Mvc;
-using static Daskalo.Core.Constants.AdministratorConstants;
+using static Daskalo.Infrastructure.Data.Constants.AdministratorConstants;
 
 namespace Daskalo.Web
 {
@@ -49,8 +49,6 @@ namespace Daskalo.Web
             app.MapDefaultControllerRoute();
 
             app.MapRazorPages();
-
-            await app.CreateAdminRoleAsync();
 
             await app.RunAsync();
         }
