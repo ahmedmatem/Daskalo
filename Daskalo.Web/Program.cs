@@ -39,9 +39,14 @@ namespace Daskalo.Web
 
             app.UseAuthorization();
 
-            app.MapControllerRoute(
-                name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
+            app.MapAreaControllerRoute(
+                  name: "Admin",
+                  areaName: "Admin",
+                  pattern: "admin/{controller=Home}/{action=Index}/{id?}"
+                );
+
+            app.MapDefaultControllerRoute();
+
             app.MapRazorPages();
 
             app.Run();
