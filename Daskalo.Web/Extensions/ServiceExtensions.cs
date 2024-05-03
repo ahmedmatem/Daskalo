@@ -1,4 +1,7 @@
-﻿using Daskalo.Infrastructure.Data;
+﻿using Daskalo.Core.Contracts;
+using Daskalo.Core.Services;
+using Daskalo.Infrastructure.Data;
+using Daskalo.Infrastructure.Data.DataRepository;
 using Daskalo.Infrastructure.Data.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -9,6 +12,7 @@ namespace Daskalo.Web.Extensions
     {
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
+            services.AddScoped<ISchoolService, SchoolService>();
 
             return services;
         }
@@ -21,6 +25,8 @@ namespace Daskalo.Web.Extensions
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(connectionString))
                 .AddDatabaseDeveloperPageExceptionFilter();
+
+            services.AddScoped<IRepository, Repository>();
 
             return services;
         }
