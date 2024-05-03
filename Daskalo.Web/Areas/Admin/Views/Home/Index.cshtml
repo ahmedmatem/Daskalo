@@ -1,1 +1,69 @@
-﻿
+﻿@using Daskalo.Web.ViewModels
+
+@inject ISchoolService schoolService
+@inject ITeacherService teacherService
+@inject IGroupService groupService
+@inject IStudentService studentService
+
+@{
+    ViewData["Title"] = "Начало";
+
+    var schoolsCardLinkViewModel = new CardLinkViewModel()
+    {
+        ImageSource = "images/schools-icon.png",
+        Link = new LinkViewModel()
+        {
+            Area = "Admin",
+            Controller = "Schools",
+            Action = "Index",
+            Text = "Училища"
+        },
+        Value = (await schoolService.GetSchoolsCountAsync()).ToString()
+    };
+
+    var teachersCardLinkViewModel = new CardLinkViewModel()
+    {
+        ImageSource = "images/teachers-icon.png",
+        Link = new LinkViewModel()
+        {
+            Area = "Admin",
+            Controller = "Teachers",
+            Action = "Index",
+            Text = "Учители"
+        },
+        Value = (await teacherService.GetTeachersCountAsync()).ToString()
+    };
+
+    var groupsCardLinkViewModel = new CardLinkViewModel()
+    {
+        ImageSource = "images/groups-icon.png",
+        Link = new LinkViewModel()
+        {
+            Area = "Admin",
+            Controller = "Groups",
+            Action = "Index",
+            Text = "Групи"
+        },
+        Value = (await groupService.GetGroupsCountAsync()).ToString()
+    };
+
+    var studentsCardLinkViewModel = new CardLinkViewModel()
+    {
+        ImageSource = "images/students-icon.png",
+        Link = new LinkViewModel()
+        {
+            Area = "Admin",
+            Controller = "Students",
+            Action = "Index",
+            Text = "Ученици"
+        },
+        Value = (await studentService.GetStudentsCountAsync()).ToString()
+    };
+
+    <div class="row justify-content-center">
+        <partial name="_CardLinkPartial" model="@schoolsCardLinkViewModel" />
+        <partial name="_CardLinkPartial" model="@teachersCardLinkViewModel" />
+        <partial name="_CardLinkPartial" model="@groupsCardLinkViewModel" />
+        <partial name="_CardLinkPartial" model="@studentsCardLinkViewModel" />
+    </div>
+}

@@ -13,6 +13,9 @@ namespace Daskalo.Web.Extensions
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
             services.AddScoped<ISchoolService, SchoolService>();
+            services.AddScoped<ITeacherService, TeacherService>();
+            services.AddScoped<IGroupService, GroupService>();
+            services.AddScoped<IStudentService, StudentService>();
 
             return services;
         }

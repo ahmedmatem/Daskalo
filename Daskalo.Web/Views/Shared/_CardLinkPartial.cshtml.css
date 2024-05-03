@@ -1,0 +1,14 @@
+﻿div.item-value {
+    font-size: 3em;
+    font-weight: 500;
+    color: grey;
+}
+
+div.item-name {
+    font-size: 1.6em;
+}
+
+img {
+    width: 50%;
+    height: 50%;
+}

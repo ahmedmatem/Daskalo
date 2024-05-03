@@ -2,12 +2,12 @@
 
 <div class="col-sm-6 col-md-3 mt-4">
     <div class="card align-items-center justify-content-center">
-        <img class="card-img-top" src="@Model.ImageSource">
+        <img class="card-img-top w-50 h-50" src="@Model.ImageSource">
         <div class="justify-content-center align-items-center">
             <a asp-area="@Model.Link.Area"
                asp-controller="@Model.Link.Controller"
                asp-action="@Model.Link.Action"
-               class="btn btn-sm btn-primary">
+               class="btn btn-sm btn-outline-primary">
                 @Model.Link.Text
             </a>
             <div class="text-center item-value">@Model.Value</div>

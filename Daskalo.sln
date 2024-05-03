@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34622.214
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Daskalo.Web", "Daskalo.Web\Daskalo.Web.csproj", "{1F494472-AB92-4735-87AE-3C4BAE3A04CA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Daskalo.Web", "Daskalo.Web\Daskalo.Web.csproj", "{1F494472-AB92-4735-87AE-3C4BAE3A04CA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Daskalo.Core", "Daskalo.Core\Daskalo.Core.csproj", "{36789AFC-1FB1-44DB-A535-BE73A7CF6366}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Daskalo.Core", "Daskalo.Core\Daskalo.Core.csproj", "{36789AFC-1FB1-44DB-A535-BE73A7CF6366}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Daskalo.Infrastructure", "Daskalo.Infrastructure\Daskalo.Infrastructure.csproj", "{CA91EE18-365D-400E-AAD1-88A364C58E4A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Daskalo.Infrastructure", "Daskalo.Infrastructure\Daskalo.Infrastructure.csproj", "{CA91EE18-365D-400E-AAD1-88A364C58E4A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

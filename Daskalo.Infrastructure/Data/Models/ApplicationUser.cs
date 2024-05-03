@@ -1,4 +1,5 @@
 ﻿
+using Daskalo.Infrastructure.Data.Contracts;
 using Daskalo.Infrastructure.Data.Types;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -11,7 +12,7 @@ namespace Daskalo.Infrastructure.Data.Models
     /// <summary>
     /// Extended identity user model.
     /// </summary>
-    public class ApplicationUser : IdentityUser
+    public class ApplicationUser : IdentityUser, IDeletable
     {
         /// <summary>
         /// Unique identifier of school the user wants to participate in.
@@ -47,5 +48,8 @@ namespace Daskalo.Infrastructure.Data.Models
         /// The school the user participate in.
         /// </summary>]
         public School School { get; set; } = null!;
+
+        public bool IsDeleted { get; set ; }
+        public DateTime? DeletedOn { get; set; }
     }
 }
