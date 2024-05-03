@@ -1,4 +1,4 @@
-using Daskalo.Web.Models;
+using Daskalo.Web.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 

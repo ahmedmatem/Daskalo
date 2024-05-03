@@ -1,4 +1,4 @@
-namespace Daskalo.Web.Models
+namespace Daskalo.Web.ViewModels
 {
     public class ErrorViewModel
     {
