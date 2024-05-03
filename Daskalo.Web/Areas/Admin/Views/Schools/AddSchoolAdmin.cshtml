@@ -1,0 +1,40 @@
+﻿@model AddSchoolAdminFormViewModel
+
+@{
+    ViewData["Title"] = "Добавяне на администратор";
+}
+
+<nav class="d-flex" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a asp-action=""><i class="fa-solid fa-arrow-left"></i> Назад</a>
+        </li>
+    </ol>
+</nav>
+
+<h3 class="text-center">@ViewData["Title"]</h3>
+
+<div class="row justify-content-center">
+    <div class="p-3 col-md-6">
+        <h5 class="text-center">@Model.Scholl.Type&nbsp;@Model.Scholl.Name - @Model.Scholl.City</h5>
+        <form asp-action="AddSchoolAdmin" method="post">
+            <input type="hidden" asp-for="Scholl.Id" />
+            <div class="form-floating">
+                <select asp-for="TeacherId"
+                        asp-items="@Model.TeachersInSchool" class="form-select" aria-required="true">
+                        <option>Изберете учител за администратор</option>
+                </select>
+                <label asp-for="TeacherId" class="form-label"></label>
+            </div>
+            <div class="text-center mt-2">
+                <a asp-action="" class="btn btn-outline-secondary">Отказ</a>
+                <button type="submit" class="btn btn-primary">Създай</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <partial name="_FontAwesomePartial" />
+}

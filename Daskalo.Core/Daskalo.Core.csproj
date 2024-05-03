@@ -10,8 +10,4 @@
     <ProjectReference Include="..\Daskalo.Infrastructure\Daskalo.Infrastructure.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
-
 </Project>

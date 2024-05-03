@@ -1,0 +1,68 @@
+﻿@model IEnumerable<SchoolServiceModel>
+
+@{
+    ViewData["Title"] = "Всички училища";
+}
+
+<nav class="d-flex" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a asp-controller="Home">Начало</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">@ViewData["Title"]</li>
+    </ol>
+</nav>
+
+<h3>@ViewData["Title"] (@Model.Count())</h3>
+
+<a asp-action="Add" class="btn btn-primary">Добави училище</a>
+<a asp-action="AllBlocked" class="btn btn-outline-secondary float-end">
+    <i class="fa-solid fa-ban"></i> Блокирани училища
+</a>
+
+<table class="table mt-1">
+    <thead>
+        <tr class="bg-danger text-white">
+            <th scope="col">Име</th>
+            <th scope="col">Населено място</th>
+            <th scope="col">Администратор</th>
+            <th scope="col" class="text-end">Действие</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var school in Model)
+        {
+            <tr>
+                <th scope="row">@school.Type&nbsp;@school.Name</th>
+                <td>@school.City</td>
+                <td>
+                    @if (school.SchoolAdmin == null)
+                    {
+                        <a asp-action="AddSchoolAdmin" asp-route-id="@school.Id"
+                           class="btn btn-outline-success btn-sm" title="Добави уилищен администратор">
+                            Добави
+                        </a>
+                    }
+                    else
+                    {
+                        @school.SchoolAdmin.FullName
+                    }
+                </td>
+                <td class="text-end">
+                    <a asp-action="Edit" asp-route-id="@school.Id"
+                       class="btn btn-outline-primary btn-sm" title="Промени">
+                        <i class="fa-regular fa-pen-to-square"></i>
+                    </a>
+                    <a asp-action="Block" asp-route-id="@school.Id"
+                       class="btn btn-outline-danger btn-sm" title="Блокирай">
+                        <i class="fa-solid fa-ban"></i>
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts {
+    <partial name="_FontAwesomePartial" />
+}
