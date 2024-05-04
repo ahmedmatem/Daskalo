@@ -7,10 +7,12 @@ namespace Daskalo.Core.Contracts
     {
         Task<int> GetSchoolsCountAsync();
 
-        Task<IEnumerable<SchoolServiceModel>> AllSchoolsAsync();
+        Task<IEnumerable<School>> AllSchoolsAsync();
 
         Task<School?> GetByIdAsync(string id);
 
         Task<bool> TryAddSchoolAdminAsync(string schoolId, string teacherId);
+
+        Task AddSchoolAsync(School school);
     }
 }

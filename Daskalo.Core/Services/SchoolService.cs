@@ -26,20 +26,17 @@ namespace Daskalo.Core.Services
             logger = _logger;
         }
 
-        public async Task<IEnumerable<SchoolServiceModel>> AllSchoolsAsync()
+        public async Task AddSchoolAsync(School school)
+        {
+            await repository.AddAsync(school);
+            await repository.SaveChangesAsync<School>();
+        }
+
+        public async Task<IEnumerable<School>> AllSchoolsAsync()
         {
             return await repository.AllReadonly<School>()
                 .Where(s => !s.IsDeleted)
                 .Include(s => s.SchoolAdmin)
-                .Select(s => new SchoolServiceModel
-                {
-                    Id = s.Id,
-                    SchoolAdminId = s.SchoolAdminId,
-                    Name = s.Name,
-                    Type = s.Type,
-                    City = s.City,
-                    SchoolAdmin = s.SchoolAdmin,
-                })
                 .ToListAsync();
         }
 

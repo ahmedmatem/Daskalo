@@ -1,4 +1,7 @@
-﻿using Daskalo.Core.Contracts;
+﻿using AutoMapper;
+using Daskalo.Core.Contracts;
+using Daskalo.Core.Models.School;
+using Daskalo.Infrastructure.Data.Models;
 using Daskalo.Web.Areas.Admin.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -8,16 +11,18 @@ namespace Daskalo.Web.Areas.Admin.Controllers
 {
     public class SchoolsController : BaseAdminController
     {
+        private readonly IMapper mapper;
         private readonly ISchoolService schoolService;
         private readonly ITeacherService teacherService;
 
         public SchoolsController(
+            IMapper _mapper,
             ISchoolService _schoolService,
             ITeacherService _teacherService)
         {
+            mapper = _mapper;
             schoolService = _schoolService;
             teacherService = _teacherService;
-
         }
 
         public async Task<IActionResult> Index()
@@ -25,6 +30,29 @@ namespace Daskalo.Web.Areas.Admin.Controllers
             var model = await schoolService.AllSchoolsAsync();
 
             return View(model);
+        }
+
+        [HttpGet]
+        public IActionResult Add()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Add(SchoolFormViewModel model)
+        {
+            if(!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var school = mapper.Map<School>(model);
+
+            await schoolService.AddSchoolAsync(school);
+
+            TempData[MessageSuccess] = "Училището бе добавено успешно.";
+
+            return RedirectToAction(nameof(Index));
         }
 
         [HttpGet]
