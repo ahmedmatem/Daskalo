@@ -11,6 +11,12 @@ namespace Daskalo.Core.Contracts
         Task<int> GetSchoolsCountAsync();
 
         /// <summary>
+        /// Requests the number of all blocked schools.
+        /// </summary>
+        /// <returns>Returns the number of all blocked(deleted) schools.</returns>
+        Task<int> GetBlockedSchoolsCountAsync();
+
+        /// <summary>
         /// Requests all schools from datasource.
         /// </summary>
         /// <returns>Returns all schools excluding deleted ones.</returns>

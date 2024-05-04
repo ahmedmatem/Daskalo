@@ -1,7 +1,11 @@
 ﻿@model IEnumerable<Daskalo.Infrastructure.Data.Models.School>
 
+@inject ISchoolService schoolService
+
 @{
     ViewData["Title"] = "Всички училища";
+    var blockedSchoolsCount = await schoolService.GetBlockedSchoolsCountAsync();
+    var hasBlockedSchool = blockedSchoolsCount > 0;
 }
 
 <nav class="d-flex" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
@@ -16,8 +20,13 @@
 <h3>@ViewData["Title"] (@Model.Count())</h3>
 
 <a asp-action="Add" class="btn btn-primary">Добави училище</a>
-<a asp-action="AllBlocked" class="btn btn-outline-secondary float-end">
+<a asp-action="AllBlocked"
+   class="btn btn-outline-secondary float-end @(!hasBlockedSchool ? "disabled" : "")">
     <i class="fa-solid fa-ban"></i> Блокирани училища
+    @if (hasBlockedSchool)
+    {
+        <span>(@blockedSchoolsCount)</span>
+    }
 </a>
 
 <table class="table mt-1">

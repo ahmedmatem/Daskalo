@@ -59,6 +59,17 @@ namespace Daskalo.Core.Services
                 .ToListAsync();
         }
 
+        /// <summary>
+        /// Requests the number of all blocked schools.
+        /// </summary>
+        /// <returns>Returns the number of all blocked(deleted) schools.</returns>
+        public async Task<int> GetBlockedSchoolsCountAsync()
+        {
+            return await repository.AllReadonly<School>()
+                .Where(s => s.IsDeleted)
+                .CountAsync();
+        }
+
         public async Task<School?> GetByIdAsync(string id)
         {
             return await repository.GetByIdAsync<School>(id);
