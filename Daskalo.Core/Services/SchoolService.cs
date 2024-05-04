@@ -25,12 +25,20 @@ namespace Daskalo.Core.Services
             logger = _logger;
         }
 
+        /// <summary>
+        /// Add scholl in datasource.
+        /// </summary>
+        /// <param name="school">The school which will be added.</param>
         public async Task AddAsync(School school)
         {
             await repository.AddAsync(school);
             await repository.SaveChangesAsync<School>();
         }
 
+        /// <summary>
+        /// Requests all schools from datasource.
+        /// </summary>
+        /// <returns>Returns all schools excluding deleted ones.</returns>
         public async Task<IEnumerable<School>> AllAsync()
         {
             return await repository.AllReadonly<School>()
@@ -44,6 +52,10 @@ namespace Daskalo.Core.Services
             return await repository.GetByIdAsync<School>(id);
         }
 
+        /// <summary>
+        /// Requests the number of all registered schools.
+        /// </summary>
+        /// <returns>Returns the number of all school excluding deleted ones.</returns>
         public async Task<int> GetSchoolsCountAsync()
         {
             return await repository.AllReadonly<School>()
@@ -51,6 +63,13 @@ namespace Daskalo.Core.Services
                 .CountAsync();
         }
 
+        /// <summary>
+        /// Adds administrator to the school. Adds school administrator to SchoolAdmin role
+        /// and activates it creating custom authorization claim for user.
+        /// </summary>
+        /// <param name="schoolId">School unique identifier which the teacher becomes administrator on.</param>
+        /// <param name="teacherId">Unique identifier of the teacher who will become administrator.</param>
+        /// <returns></returns>
         public async Task<bool> TryAddSchoolAdminAsync(string schoolId, string teacherId)
         {
             var school = await repository.GetByIdAsync<School>(schoolId);
@@ -77,6 +96,10 @@ namespace Daskalo.Core.Services
             return false;
         }
 
+        /// <summary>
+        /// Update scholl.
+        /// </summary>
+        /// <param name="school">Tracked entity with updated properties.</param>
         public async Task UpdateAsync(School school)
         {
             repository.Update(school);
