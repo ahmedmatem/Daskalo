@@ -49,7 +49,7 @@ namespace Daskalo.Web.Areas.Admin.Controllers
 
             await schoolService.AddAsync(school);
 
-            TempData[MessageSuccess] = "Училището бе добавено успешно.";
+            TempData[MessageSuccess] = "Училището беше добавено успешно.";
 
             return RedirectToAction(nameof(Index));
         }
@@ -86,7 +86,7 @@ namespace Daskalo.Web.Areas.Admin.Controllers
             mapper.Map(model, school);
             await schoolService.UpdateAsync(school);
 
-            TempData[MessageSuccess] = "Училището бе променено успешно.";
+            TempData[MessageSuccess] = "Училището беше редактирано успешно.";
 
             return RedirectToAction(nameof(Index));
         }
@@ -122,12 +122,29 @@ namespace Daskalo.Web.Areas.Admin.Controllers
 
             if(schoolAdminAdded)
             {
-                TempData[MessageSuccess] = "Администраторът бе добавен успешно.";
+                TempData[MessageSuccess] = "Администраторът беше добавен успешно.";
             }
             else
             {
                 TempData[MessageError] = "Грешка при добавянето на администратор";
             }
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Block(string id)
+        {
+            var school = await schoolService.GetByIdAsync(id);
+            if(school == null)
+            {
+                return BadRequest();
+            }
+
+            school.IsDeleted = true;
+            await schoolService.UpdateAsync(school);
+
+            TempData[MessageSuccess] = $"Училище \"{school.Type} {school.Name} - {school.City}\" е блокирано.";
 
             return RedirectToAction(nameof(Index));
         }
