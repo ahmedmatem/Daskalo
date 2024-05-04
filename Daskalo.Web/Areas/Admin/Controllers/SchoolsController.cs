@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Daskalo.Core.Contracts;
-using Daskalo.Core.Models.School;
 using Daskalo.Infrastructure.Data.Models;
 using Daskalo.Web.Areas.Admin.ViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -27,7 +26,7 @@ namespace Daskalo.Web.Areas.Admin.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var model = await schoolService.AllSchoolsAsync();
+            var model = await schoolService.AllAsync();
 
             return View(model);
         }
@@ -48,9 +47,46 @@ namespace Daskalo.Web.Areas.Admin.Controllers
 
             var school = mapper.Map<School>(model);
 
-            await schoolService.AddSchoolAsync(school);
+            await schoolService.AddAsync(school);
 
             TempData[MessageSuccess] = "Училището бе добавено успешно.";
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(string id)
+        {
+            var school = await schoolService.GetByIdAsync(id);
+            if(school == null)
+            {
+                return BadRequest();
+            }
+
+            var model = mapper.Map<SchoolFormViewModel>(school);
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(SchoolFormViewModel model)
+        {
+            var school = await schoolService.GetByIdAsync(model.Id);
+            
+            if(school == null)
+            {
+                return BadRequest();
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            mapper.Map(model, school);
+            await schoolService.UpdateAsync(school);
+
+            TempData[MessageSuccess] = "Училището бе променено успешно.";
 
             return RedirectToAction(nameof(Index));
         }

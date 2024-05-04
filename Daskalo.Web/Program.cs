@@ -1,4 +1,4 @@
-using Daskalo.Web.AutoMapper;
+using Daskalo.Web.AutoMapperProfiles;
 using Daskalo.Web.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using static Daskalo.Infrastructure.Data.Constants.AdministratorConstants;
@@ -22,7 +22,7 @@ namespace Daskalo.Web
 
             builder.Services.AddApplicationServices();
 
-            builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
+            builder.Services.AddAutoMapper(typeof(SchoolAutoMapperProfile));
 
             var app = builder.Build();
 

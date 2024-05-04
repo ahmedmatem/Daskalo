@@ -1,5 +1,4 @@
 ﻿using Daskalo.Core.Contracts;
-using Daskalo.Core.Models.School;
 using Daskalo.Infrastructure.Data.DataRepository;
 using Daskalo.Infrastructure.Data.Models;
 using Microsoft.AspNetCore.Identity;
@@ -26,13 +25,13 @@ namespace Daskalo.Core.Services
             logger = _logger;
         }
 
-        public async Task AddSchoolAsync(School school)
+        public async Task AddAsync(School school)
         {
             await repository.AddAsync(school);
             await repository.SaveChangesAsync<School>();
         }
 
-        public async Task<IEnumerable<School>> AllSchoolsAsync()
+        public async Task<IEnumerable<School>> AllAsync()
         {
             return await repository.AllReadonly<School>()
                 .Where(s => !s.IsDeleted)
@@ -76,6 +75,12 @@ namespace Daskalo.Core.Services
             }
 
             return false;
+        }
+
+        public async Task UpdateAsync(School school)
+        {
+            repository.Update(school);
+            await repository.SaveChangesAsync<School>();
         }
     }
 }

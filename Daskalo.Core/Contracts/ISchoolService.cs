@@ -1,5 +1,4 @@
-﻿using Daskalo.Core.Models.School;
-using Daskalo.Infrastructure.Data.Models;
+﻿using Daskalo.Infrastructure.Data.Models;
 
 namespace Daskalo.Core.Contracts
 {
@@ -7,12 +6,14 @@ namespace Daskalo.Core.Contracts
     {
         Task<int> GetSchoolsCountAsync();
 
-        Task<IEnumerable<School>> AllSchoolsAsync();
+        Task<IEnumerable<School>> AllAsync();
 
         Task<School?> GetByIdAsync(string id);
 
         Task<bool> TryAddSchoolAdminAsync(string schoolId, string teacherId);
 
-        Task AddSchoolAsync(School school);
+        Task AddAsync(School school);
+
+        Task UpdateAsync(School school);
     }
 }
