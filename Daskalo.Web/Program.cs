@@ -15,7 +15,9 @@ namespace Daskalo.Web
             builder.Services.AddApplicationIdentity();
 
             builder.Services.AddControllersWithViews(options =>
-                options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>());
+            {
+                options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
+            });
 
             builder.Services.AddApplicationServices();
 

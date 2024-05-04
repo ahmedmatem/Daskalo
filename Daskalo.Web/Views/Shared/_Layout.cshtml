@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Даскало</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/lib/toastr/toastr.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Daskalo.Web.styles.css" asp-append-version="true" />
 </head>
@@ -25,7 +26,26 @@
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/toastr/toastr.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
+
+    @if(TempData[MessageSuccess] != null)
+    {
+        <partial name="_ToastSuccessPartial" model="@TempData[MessageSuccess]" />
+    }
+    else if(TempData[MessageError] != null)
+    {
+        <partial name="_ToastErrorPartial" model="@TempData[MessageError]" />
+    }
+    else if (TempData[MessageInfo] != null)
+    {
+        <partial name="_ToastInfoPartial" model="@TempData[MessageInfo]" />
+    }
+    else if (TempData[MessageWarning] != null)
+    {
+        <partial name="_ToastWarningPartial" model="@TempData[MessageWarning]" />
+    }
+
 </body>
 </html>

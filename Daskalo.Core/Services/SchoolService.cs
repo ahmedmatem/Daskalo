@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System.Security.Claims;
+using static Daskalo.Core.Claims.UserClaims;
 
 namespace Daskalo.Core.Services
 {
@@ -66,7 +67,9 @@ namespace Daskalo.Core.Services
                 if (result.Succeeded)
                 {
                     // Activate teacher by assigning activation claim to it.
-                    await userManager.AddClaimAsync(teacher, new Claim("Activated", "Activated"));
+                    await userManager.AddClaimAsync(
+                        teacher, 
+                        new Claim(AuthClaim.Key, AuthClaim.Value));
 
                     // Update school with SchoolAdmin teacher.
                     school.SchoolAdmin = teacher;

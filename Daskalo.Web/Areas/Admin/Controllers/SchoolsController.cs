@@ -2,6 +2,7 @@
 using Daskalo.Web.Areas.Admin.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using static Daskalo.Core.Constants.ToastMessageConstants;
 
 namespace Daskalo.Web.Areas.Admin.Controllers
 {
@@ -37,7 +38,7 @@ namespace Daskalo.Web.Areas.Admin.Controllers
 
             var model = new AddSchoolAdminFormViewModel
             {
-                Scholl = school,
+                School = school,
                 TeachersInSchool = (await teacherService.TeachersInSchoolSelectList(id))
                 .Select(x => new SelectListItem()
                 {
@@ -52,10 +53,17 @@ namespace Daskalo.Web.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> AddSchoolAdmin(AddSchoolAdminFormViewModel model)
         {
-            string schoolId = model.Scholl.Id;
-            string teacherId = model.TeacherId;
+            var schoolAdminAdded = await schoolService
+                .TryAddSchoolAdminAsync(model.School.Id, model.TeacherId);
 
-            await schoolService.TryAddSchoolAdminAsync(schoolId, teacherId);
+            if(schoolAdminAdded)
+            {
+                TempData[MessageSuccess] = "Администраторът бе добавен успешно.";
+            }
+            else
+            {
+                TempData[MessageError] = "Грешка при добавянето на администратор";
+            }
 
             return RedirectToAction(nameof(Index));
         }

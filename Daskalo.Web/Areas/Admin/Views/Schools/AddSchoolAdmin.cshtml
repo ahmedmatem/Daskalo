@@ -16,15 +16,16 @@
 
 <div class="row justify-content-center">
     <div class="p-3 col-md-6">
-        <h5 class="text-center">@Model.Scholl.Type&nbsp;@Model.Scholl.Name - @Model.Scholl.City</h5>
+        <h5 class="text-center">@Model.School.Type&nbsp;@Model.School.Name - @Model.School.City</h5>
         <form asp-action="AddSchoolAdmin" method="post">
-            <input type="hidden" asp-for="Scholl.Id" />
+            <input type="hidden" asp-for="School.Id" />
             <div class="form-floating">
                 <select asp-for="TeacherId"
                         asp-items="@Model.TeachersInSchool" class="form-select" aria-required="true">
-                        <option>Изберете учител за администратор</option>
+                        <option value="">Изберете администратор</option>
                 </select>
                 <label asp-for="TeacherId" class="form-label"></label>
+                <span asp-validation-for="TeacherId" class="text-danger"></span>
             </div>
             <div class="text-center mt-2">
                 <a asp-action="" class="btn btn-outline-secondary">Отказ</a>
