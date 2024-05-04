@@ -47,6 +47,18 @@ namespace Daskalo.Core.Services
                 .ToListAsync();
         }
 
+        /// <summary>
+        /// Requests all deleted schools from datasource.
+        /// </summary>
+        /// <returns>Returns all deleted schools.</returns>
+        public async Task<IEnumerable<School>> AllBlockedAsync()
+        {
+            return await repository.AllReadonly<School>()
+                .Where(s => s.IsDeleted)
+                .Include(s => s.SchoolAdmin)
+                .ToListAsync();
+        }
+
         public async Task<School?> GetByIdAsync(string id)
         {
             return await repository.GetByIdAsync<School>(id);

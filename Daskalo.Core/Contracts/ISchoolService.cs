@@ -16,6 +16,12 @@ namespace Daskalo.Core.Contracts
         /// <returns>Returns all schools excluding deleted ones.</returns>
         Task<IEnumerable<School>> AllAsync();
 
+        /// <summary>
+        /// Requests all deleted schools from datasource.
+        /// </summary>
+        /// <returns>Returns all deleted schools.</returns>
+        Task<IEnumerable<School>> AllBlockedAsync();
+
         Task<School?> GetByIdAsync(string id);
 
         /// <summary>

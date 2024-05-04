@@ -133,10 +133,18 @@ namespace Daskalo.Web.Areas.Admin.Controllers
         }
 
         [HttpGet]
+        public async Task<IActionResult> AllBlocked()
+        {
+            var model = await schoolService.AllBlockedAsync();
+
+            return View(model);
+        }
+
+        [HttpGet]
         public async Task<IActionResult> Block(string id)
         {
             var school = await schoolService.GetByIdAsync(id);
-            if(school == null)
+            if (school == null)
             {
                 return BadRequest();
             }
@@ -145,6 +153,23 @@ namespace Daskalo.Web.Areas.Admin.Controllers
             await schoolService.UpdateAsync(school);
 
             TempData[MessageSuccess] = $"Училище \"{school.Type} {school.Name} - {school.City}\" е блокирано.";
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Unblock(string id)
+        {
+            var school = await schoolService.GetByIdAsync(id);
+            if (school == null)
+            {
+                return BadRequest();
+            }
+
+            school.IsDeleted = false;
+            await schoolService.UpdateAsync(school);
+
+            TempData[MessageSuccess] = $"Училище \"{school.Type} {school.Name} - {school.City}\" е отблокирано.";
 
             return RedirectToAction(nameof(Index));
         }
