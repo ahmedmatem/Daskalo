@@ -16,10 +16,27 @@ namespace Daskalo.Core.Services
             repository = _repository;
         }
 
+        /// <summary>
+        /// Gets all students count.
+        /// </summary>
         public async Task<int> GetStudentsCountAsync()
         {
             return await repository.AllReadonly<ApplicationUser>()
                 .Where(u => !u.IsDeleted && u.Role == Role.Student)
+                .CountAsync();
+        }
+
+        /// <summary>
+        /// Gets all students in school.
+        /// </summary>
+        /// <param name="schoolId">School unique identifier.</param>
+        public async Task<int> GetStudentsCountInSchoolAsync(string schoolId)
+        {
+            return await repository.AllReadonly<ApplicationUser>()
+                .Where(u =>
+                    u.SchoolId == schoolId
+                    && !u.IsDeleted 
+                    && u.Role == Role.Student)
                 .CountAsync();
         }
     }

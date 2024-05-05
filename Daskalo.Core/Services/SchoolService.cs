@@ -70,6 +70,11 @@ namespace Daskalo.Core.Services
                 .CountAsync();
         }
 
+        /// <summary>
+        /// Gets the school by id.
+        /// </summary>
+        /// <param name="schoolId">School unique identifier.</param>
+        /// <returns>Return School Entity or null if not found.</returns>
         public async Task<School?> GetByIdAsync(string id)
         {
             return await repository.GetByIdAsync<School>(id);

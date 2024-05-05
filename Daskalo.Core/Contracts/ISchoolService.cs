@@ -28,6 +28,11 @@ namespace Daskalo.Core.Contracts
         /// <returns>Returns all deleted schools.</returns>
         Task<IEnumerable<School>> AllBlockedAsync();
 
+        /// <summary>
+        /// Gets the school by id.
+        /// </summary>
+        /// <param name="schoolId">School unique identifier.</param>
+        /// <returns>Return School Entity or null if not found.</returns>
         Task<School?> GetByIdAsync(string id);
 
         /// <summary>

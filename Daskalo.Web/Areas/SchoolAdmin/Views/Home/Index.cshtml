@@ -1,0 +1,59 @@
+﻿@model Daskalo.Infrastructure.Data.Models.School
+
+@using Daskalo.Web.ViewModels
+
+@inject IGroupService groupService
+@inject ITeacherService teacherService
+@inject IStudentService studentService
+
+@{
+    ViewData["Title"] = "Начало";
+
+    string schoolFullName = Model.Type + " " + Model.Name + " - " + Model.City;
+    string schoolId = Model.Id;
+
+    var groupModel = new CardLinkViewModel()
+    {
+        ImageSource = "images/groups-icon.png",
+        Link = new LinkViewModel
+        {
+            Text = "Групи",
+            Area = "SchoolAdmin",
+            Controller = "Groups",
+            Action = "Index"
+        },
+        Value = (await groupService.GetGroupsCountInSchoolAsync(schoolId)).ToString()
+    };
+    var teacherModel = new CardLinkViewModel()
+    {
+        ImageSource = "images/teachers-icon.png",
+        Link = new LinkViewModel
+        {
+            Text = "Учители",
+            Area = "SchoolAdmin",
+            Controller = "Teachers",
+            Action = "Index"
+        },
+        Value = (await teacherService.GetTeachersCountInSchoolAsync(schoolId)).ToString()
+    };
+    var studentModel = new CardLinkViewModel()
+    {
+        ImageSource = "images/students-icon.png",
+        Link = new LinkViewModel
+        {
+            Text = "Ученици",
+            Area = "SchoolAdmin",
+            Controller = "Students",
+            Action = "Index"
+        },
+        Value = (await studentService.GetStudentsCountInSchoolAsync(schoolId)).ToString()
+    };
+}
+
+<h3 class="text-center">@schoolFullName</h3>
+
+<div class="row justify-content-center">
+    <partial name="_CardLinkPartial" model="@groupModel" />
+    <partial name="_CardLinkPartial" model="@teacherModel" />
+    <partial name="_CardLinkPartial" model="@studentModel" />
+</div>
