@@ -51,6 +51,17 @@ namespace Daskalo.Web
                   pattern: "admin/{controller=Home}/{action=Index}/{id?}"
                 );
 
+            app.MapAreaControllerRoute(
+                name: "SchoolAdmin",
+                areaName: "SchoolAdmin",
+                pattern: "sadmin/{controller=Home}/{action=Index}/{id?}");
+
+            app.MapAreaControllerRoute(
+                  name: "Teacher",
+                  areaName: "Teacher",
+                  pattern: "teacher/{controller=Home}/{action=Index}/{id?}"
+                );
+
             app.MapDefaultControllerRoute();
 
             app.MapRazorPages();
