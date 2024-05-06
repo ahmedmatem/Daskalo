@@ -1,6 +1,8 @@
 ﻿using Daskalo.Core.Contracts;
 using Daskalo.Web.Extensions;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using NuGet.DependencyResolver;
 
 namespace Daskalo.Web.Areas.SchoolAdmin.Controllers
 {
@@ -20,17 +22,15 @@ namespace Daskalo.Web.Areas.SchoolAdmin.Controllers
         public async Task<IActionResult> Index()
         {
             var teacherId = User.Id();
-            if(teacherId != null)
+            var schoolId = User.SchoolId();
+
+            if(teacherId == null || schoolId == null)
             {
-                var teacher = await teacherService.GetByIdAsync(teacherId);
-                if(teacher != null)
-                {
-                    var model = await schoolService.GetByIdAsync(teacher.SchoolId);
-                    return View(model);
-                }
+                return BadRequest();
             }
 
-            return BadRequest();            
+            var model = await schoolService.GetByIdAsync(schoolId);
+            return View(model);
         }
     }
 }

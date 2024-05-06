@@ -36,8 +36,9 @@ namespace Daskalo.Core.Contracts
         Task<School?> GetByIdAsync(string id);
 
         /// <summary>
-        /// Adds administrator to the school. Adds school administrator to SchoolAdmin role
-        /// and activates it creating custom authorization claim for user.
+        /// Adds administrator to the school. 
+        /// Using custom user claims sssigns School identifier and add
+        /// user activated claim.
         /// </summary>
         /// <param name="schoolId">School unique identifier which the teacher becomes administrator on.</param>
         /// <param name="teacherId">Unique identifier of the teacher who will become administrator.</param>

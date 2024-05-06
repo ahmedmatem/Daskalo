@@ -92,8 +92,9 @@ namespace Daskalo.Core.Services
         }
 
         /// <summary>
-        /// Adds administrator to the school. Adds school administrator to SchoolAdmin role
-        /// and activates it creating custom authorization claim for user.
+        /// Adds administrator to the school. 
+        /// Using custom user claims sssigns School identifier and add
+        /// user activated claim.
         /// </summary>
         /// <param name="schoolId">School unique identifier which the teacher becomes administrator on.</param>
         /// <param name="teacherId">Unique identifier of the teacher who will become administrator.</param>
@@ -109,10 +110,12 @@ namespace Daskalo.Core.Services
                 var result = await userManager.AddToRoleAsync(teacher, "SchoolAdmin");
                 if (result.Succeeded)
                 {
-                    // Activate teacher by assigning activation claim to it.
-                    await userManager.AddClaimAsync(
-                        teacher, 
-                        new Claim(AuthClaim.Key, AuthClaim.Value));
+                    // Add custom user claims.
+                    await userManager.AddClaimsAsync(teacher, new[]
+                    {
+                        new Claim(ActivationStatusClaim.Key, ActivationStatusClaim.Value),
+                        new Claim(SchoolIdentifierClaim, teacher.SchoolId)
+                    });
 
                     // Update school with SchoolAdmin teacher.
                     school.SchoolAdmin = teacher;
