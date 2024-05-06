@@ -27,7 +27,6 @@
 
   <ItemGroup>
     <Folder Include="Areas\SchoolAdmin\ViewModels\" />
-    <Folder Include="Areas\SchoolAdmin\Views\Shared\" />
     <Folder Include="Areas\Teacher\Controllers\" />
     <Folder Include="Areas\Teacher\Data\" />
     <Folder Include="Areas\Teacher\Models\" />

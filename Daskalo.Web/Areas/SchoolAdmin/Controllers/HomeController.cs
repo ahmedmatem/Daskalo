@@ -21,15 +21,12 @@ namespace Daskalo.Web.Areas.SchoolAdmin.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var teacherId = User.Id();
-            var schoolId = User.SchoolId();
-
-            if(teacherId == null || schoolId == null)
+            if(User.Id == null || User.SchoolId() == null)
             {
                 return BadRequest();
             }
 
-            var model = await schoolService.GetByIdAsync(schoolId);
+            var model = await schoolService.GetByIdAsync(User.SchoolId()!);
             return View(model);
         }
     }

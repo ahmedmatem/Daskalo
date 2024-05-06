@@ -12,7 +12,7 @@
     string schoolFullName = Model.Type + " " + Model.Name + " - " + Model.City;
     string schoolId = Model.Id;
 
-    var groupModel = new CardLinkViewModel()
+    var groupsCardLinkViewModel = new CardLinkViewModel()
     {
         ImageSource = "images/groups-icon.png",
         Link = new LinkViewModel
@@ -24,7 +24,7 @@
         },
         Value = (await groupService.GetGroupsCountInSchoolAsync(schoolId)).ToString()
     };
-    var teacherModel = new CardLinkViewModel()
+    var teachersCardLinkViewModel = new CardLinkViewModel()
     {
         ImageSource = "images/teachers-icon.png",
         Link = new LinkViewModel
@@ -36,7 +36,7 @@
         },
         Value = (await teacherService.GetTeachersCountInSchoolAsync(schoolId)).ToString()
     };
-    var studentModel = new CardLinkViewModel()
+    var studentsCardLinkViewModel = new CardLinkViewModel()
     {
         ImageSource = "images/students-icon.png",
         Link = new LinkViewModel
@@ -53,7 +53,7 @@
 <h3 class="text-center">@schoolFullName</h3>
 
 <div class="row justify-content-center">
-    <partial name="_CardLinkPartial" model="@groupModel" />
-    <partial name="_CardLinkPartial" model="@teacherModel" />
-    <partial name="_CardLinkPartial" model="@studentModel" />
+    <partial name="_CardLinkPartial" model="@groupsCardLinkViewModel" />
+    <partial name="_CardLinkPartial" model="@teachersCardLinkViewModel" />
+    <partial name="_CardLinkPartial" model="@studentsCardLinkViewModel" />
 </div>
