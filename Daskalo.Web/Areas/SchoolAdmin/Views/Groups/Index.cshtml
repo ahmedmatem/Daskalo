@@ -1,0 +1,70 @@
+﻿@* @model IEnumerable<GroupTableRowServiceModel>
+
+@{
+    ViewData["Title"] = "Всички групи";
+}
+
+<nav class="d-flex" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a asp-controller="Home"><i class="fa-solid fa-arrow-left"></i> Назад</a>
+        </li>
+    </ol>
+</nav>
+
+<h3 class="text-center text-secondary">@ViewData["Title"]</h3>
+
+@if (Model.Any())
+{
+    <div class="container">
+        <div class="row">
+            <table class="table table-borderless">
+                <thead>
+                    <tr class="table-primary text-secondary">
+                        <th scope="col">Група</th>
+                        <th scope="col">Учител</th>
+                        <th scope="col" class="col-1 text-center">Старт/Стоп</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr class="@(item.IsDeleted ? "text-secondary" : "")">
+                            <td>@item.Name</td>
+                            <td>@item.GroupOwnerName</td>
+                            <td class="text-center">
+                                @if (item.IsDeleted)
+                                {
+                                    <a asp-action="Start"
+                                       asp-route-id="@item.GroupId"
+                                       asp-route-schoolId="@item.SchoolId"
+                                       class="text-success" title="Старт">
+                                        <i class="fa-solid fa-play"></i>
+                                    </a>
+                                }
+                                else
+                                {
+                                    <a asp-action="Stop"
+                                       asp-route-id="@item.GroupId"
+                                       asp-route-schoolId="@item.SchoolId"
+                                       class="text-danger" title="Стоп">
+                                        <i class="fa-solid fa-pause"></i>
+                                    </a>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+}
+else
+{
+    <div class="alert alert-primary text-center" role="alert">
+        Няма създадени групи.
+    </div>
+}
+
+
+<partial name="_FontAwesomePartial" /> *@

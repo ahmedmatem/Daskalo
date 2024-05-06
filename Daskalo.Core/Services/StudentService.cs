@@ -17,26 +17,25 @@ namespace Daskalo.Core.Services
         }
 
         /// <summary>
-        /// Gets all students count.
+        /// Gets all students count excluding ones marked as deleted.
         /// </summary>
         public async Task<int> GetStudentsCountAsync()
         {
-            return await repository.AllReadonly<ApplicationUser>()
-                .Where(u => !u.IsDeleted && u.Role == Role.Student)
+            return await repository
+                .AllReadonly<ApplicationUser>()
+                .Where(u => u.Role == Role.Student)
                 .CountAsync();
         }
 
         /// <summary>
-        /// Gets all students in school.
+        /// Gets all students in school excluding ones marked as deleted.
         /// </summary>
         /// <param name="schoolId">School unique identifier.</param>
         public async Task<int> GetStudentsCountInSchoolAsync(string schoolId)
         {
-            return await repository.AllReadonly<ApplicationUser>()
-                .Where(u =>
-                    u.SchoolId == schoolId
-                    && !u.IsDeleted 
-                    && u.Role == Role.Student)
+            return await repository
+                .AllReadonly<ApplicationUser>()
+                .Where(u => u.SchoolId == schoolId && u.Role == Role.Student)
                 .CountAsync();
         }
     }

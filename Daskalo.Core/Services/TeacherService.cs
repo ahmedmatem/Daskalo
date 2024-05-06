@@ -27,26 +27,27 @@ namespace Daskalo.Core.Services
         }
 
         /// <summary>
-        /// Gets the count of all teachers in all schools.
+        /// Gets the count of all teachers in all schools,
+        /// excluding ones marked as deleted.
         /// </summary>
         public async Task<int> GetTeachersCountAsync()
         {
-            return await repository.AllReadonly<ApplicationUser>()
-                .Where(u => !u.IsDeleted && u.Role == Role.Teacher)
+            return await repository
+                .AllReadonly<ApplicationUser>()
+                .Where(u => u.Role == Role.Teacher)
                 .CountAsync();
         }
 
         /// <summary>
-        /// Gets the count of all teachers in the school.
+        /// Gets the count of all teachers in the school,
+        /// excluding ones marked as deleted.
         /// </summary>
         /// <param name="schoolId">The school unique identifier.</param>
         public async Task<int> GetTeachersCountInSchoolAsync(string schoolId)
         {
-            return await repository.AllReadonly<ApplicationUser>()
-               .Where(u =>
-                    u.SchoolId == schoolId 
-                    && !u.IsDeleted 
-                    && u.Role == Role.Teacher)
+            return await repository
+                .AllReadonly<ApplicationUser>()
+               .Where(u => u.SchoolId == schoolId && u.Role == Role.Teacher)
                .CountAsync();
         }
 
@@ -56,8 +57,9 @@ namespace Daskalo.Core.Services
         /// <param name="schoolId">The school unique identifier</param>
         public async Task<IEnumerable<KeyValuePair<string, string>>> TeachersInSchoolSelectList(string schoolId)
         {
-            return await repository.AllReadonly<ApplicationUser>()
-                .Where(u => u.SchoolId == schoolId && u.Role == Role.Teacher && !u.IsDeleted)
+            return await repository
+                .AllReadonly<ApplicationUser>()
+                .Where(u => u.SchoolId == schoolId && u.Role == Role.Teacher)
                 .Select(t => new KeyValuePair<string, string>(t.FullName, t.Id))
                 .ToListAsync();
         }

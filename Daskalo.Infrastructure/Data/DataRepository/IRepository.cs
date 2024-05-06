@@ -1,4 +1,5 @@
 ﻿
+using Daskalo.Infrastructure.Data.Contracts;
 using System.Linq.Expressions;
 
 namespace Daskalo.Infrastructure.Data.DataRepository
@@ -6,28 +7,82 @@ namespace Daskalo.Infrastructure.Data.DataRepository
     public interface IRepository
     {
         /// <summary>
-        /// All records in a table
+        /// All records in a table excluding ones marked as deleted.
         /// </summary>
         /// <returns>Queryable expression tree</returns>
-        IQueryable<T> All<T>() where T : class;
+        IQueryable<T> All<T>() where T : class, IDeletable;
 
         /// <summary>
-        /// All records in a table
+        /// All records in a table including ones marked as deleted.
         /// </summary>
         /// <returns>Queryable expression tree</returns>
-        IQueryable<T> All<T>(Expression<Func<T, bool>> search) where T : class;
+        IQueryable<T> AllWithDeleted<T>() where T : class, IDeletable;
 
         /// <summary>
-        /// The result collection won't be tracked by the context
+        /// All records in a table marked as deleted.
         /// </summary>
-        /// <returns>Expression tree</returns>
-        IQueryable<T> AllReadonly<T>() where T : class;
+        /// <returns>Queryable expression tree</returns>
+        IQueryable<T> AllDeleted<T>() where T : class, IDeletable;
 
         /// <summary>
-        /// The result collection won't be tracked by the context
+        /// All records in a table excluding ones marked as deleted.
+        /// </summary>
+        /// <returns>Queryable expression tree</returns>
+        IQueryable<T> All<T>(Expression<Func<T, bool>> search) where T : class, IDeletable;
+
+        /// <summary>
+        /// All records in a table including ones marked as deleted.
+        /// </summary>
+        /// <returns>Queryable expression tree</returns>
+        IQueryable<T> AllWithDeleted<T>(Expression<Func<T, bool>> search) where T : class, IDeletable;
+
+        /// <summary>
+        /// All records in a table marked as deleted.
+        /// </summary>
+        /// <returns>Queryable expression tree</returns>
+        IQueryable<T> AllDeleted<T>(Expression<Func<T, bool>> search) where T : class, IDeletable;
+
+        /// <summary>
+        /// All records in a table excluding ones marked as deleted.
+        /// The result collection won't be tracked by the context.
         /// </summary>
         /// <returns>Expression tree</returns>
-        IQueryable<T> AllReadonly<T>(Expression<Func<T, bool>> search) where T : class;
+        IQueryable<T> AllReadonly<T>() where T : class, IDeletable;
+
+        /// <summary>
+        /// All records in a table including ones marked as deleted.
+        /// The result collection won't be tracked by the context.
+        /// </summary>
+        /// <returns>Expression tree</returns>
+        IQueryable<T> AllWithDeletedReadonly<T>() where T : class, IDeletable;
+
+        /// <summary>
+        /// All records in a table marked as deleted.
+        /// The result collection won't be tracked by the context.
+        /// </summary>
+        /// <returns>Expression tree</returns>
+        IQueryable<T> AllDeletedReadonly<T>() where T : class, IDeletable;
+
+        /// <summary>
+        /// All records in a table excluding ones marked as deleted.
+        /// The result collection won't be tracked by the context.
+        /// </summary>
+        /// <returns>Expression tree</returns>
+        IQueryable<T> AllReadonly<T>(Expression<Func<T, bool>> search) where T : class, IDeletable;
+
+        /// <summary>
+        /// All records in a table including ones marked as deleted.
+        /// The result collection won't be tracked by the context.
+        /// </summary>
+        /// <returns>Expression tree</returns>
+        IQueryable<T> AllWithDeletedReadonly<T>(Expression<Func<T, bool>> search) where T : class, IDeletable;
+
+        /// <summary>
+        /// All records in a table marked as deleted.
+        /// The result collection won't be tracked by the context.
+        /// </summary>
+        /// <returns>Expression tree</returns>
+        IQueryable<T> AllDeletedReadonly<T>(Expression<Func<T, bool>> search) where T : class, IDeletable;
 
         Task AddAsync<T>(T entity) where T : class;
 
@@ -58,7 +113,7 @@ namespace Daskalo.Infrastructure.Data.DataRepository
         void Delete<T>(T entity) where T : class;
 
         void DeleteRange<T>(IEnumerable<T> entities) where T : class;
-        void DeleteRange<T>(Expression<Func<T, bool>> deleteWhereClause) where T : class;
+        void DeleteRange<T>(Expression<Func<T, bool>> deleteWhereClause) where T : class, IDeletable;
 
         /// <summary>
         /// Gets specific record from database by primary key

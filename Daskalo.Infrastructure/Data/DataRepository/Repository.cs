@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
+using Daskalo.Infrastructure.Data.Contracts;
 
 namespace Daskalo.Infrastructure.Data.DataRepository
 {
@@ -17,31 +18,131 @@ namespace Daskalo.Infrastructure.Data.DataRepository
             => context.Set<T>();
 
         /// <summary>
-        /// All records in a table
+        /// All records in a table excluding ones marked as deleted.
         /// </summary>
         /// <returns>Queryable expression tree</returns>
-        public IQueryable<T> All<T>() where T : class
+        public IQueryable<T> All<T>() where T : class, IDeletable
+        {
+            return DbSet<T>().Where(t => !t.IsDeleted);
+        }
+
+        /// <summary>
+        /// All records in a table including ones marked as deleted.
+        /// </summary>
+        /// <returns>Queryable expression tree</returns>
+        public IQueryable<T> AllWithDeleted<T>() where T : class, IDeletable
         {
             return DbSet<T>();
         }
 
-        public IQueryable<T> All<T>(Expression<Func<T, bool>> search) where T : class
+        /// <summary>
+        /// All records in a table marked as deleted.
+        /// </summary>
+        /// <returns>Queryable expression tree</returns>
+        public IQueryable<T> AllDeleted<T>() where T : class, IDeletable
         {
-            return this.DbSet<T>().Where(search);
+            return DbSet<T>().Where(t => t.IsDeleted);
         }
 
         /// <summary>
-        /// The result collection won't be tracked by the context
+        /// All records in a table excluding ones marked as deleted.
+        /// </summary>
+        /// <returns>Queryable expression tree</returns>
+        public IQueryable<T> All<T>(Expression<Func<T, bool>> search) where T : class, IDeletable
+        {
+            return DbSet<T>()
+                .Where(t => !t.IsDeleted)
+                .Where(search);
+        }
+
+        /// <summary>
+        /// All records in a table including ones marked as deleted.
+        /// </summary>
+        /// <returns>Queryable expression tree</returns>
+        public IQueryable<T> AllWithDeleted<T>(Expression<Func<T, bool>> search) where T : class, IDeletable
+        {
+            return DbSet<T>().Where(search);
+        }
+
+        /// <summary>
+        /// All records in a table marked as deleted.
+        /// </summary>
+        /// <returns>Queryable expression tree</returns>
+        public IQueryable<T> AllDeleted<T>(Expression<Func<T, bool>> search) where T : class, IDeletable
+        {
+            return DbSet<T>()
+                .Where(t => t.IsDeleted)
+                .Where(search);
+        }
+
+        /// <summary>
+        /// All records in a table excluding ones marked as deleted.
+        /// The result collection won't be tracked by the context.
         /// </summary>
         /// <returns>Expression tree</returns>
-        public IQueryable<T> AllReadonly<T>() where T : class
+        public IQueryable<T> AllReadonly<T>() where T : class, IDeletable
+        {
+            return DbSet<T>()
+                .Where(t => !t.IsDeleted)
+                .AsNoTracking();
+        }
+
+        /// <summary>
+        /// All records in a table including ones marked as deleted.
+        /// The result collection won't be tracked by the context.
+        /// </summary>
+        /// <returns>Expression tree</returns>
+        public IQueryable<T> AllWithDeletedReadonly<T>() where T : class, IDeletable
         {
             return DbSet<T>().AsNoTracking();
         }
 
-        public IQueryable<T> AllReadonly<T>(Expression<Func<T, bool>> search) where T : class
+        /// <summary>
+        /// All records in a table marked as deleted.
+        /// The result collection won't be tracked by the context.
+        /// </summary>
+        /// <returns>Expression tree</returns>
+        public IQueryable<T> AllDeletedReadonly<T>() where T : class, IDeletable
         {
-            return this.DbSet<T>()
+            return DbSet<T>()
+                .Where(t => t.IsDeleted)
+                .AsNoTracking();
+        }
+
+        /// <summary>
+        /// All records in a table excluding ones marked as deleted.
+        /// The result collection won't be tracked by the context.
+        /// </summary>
+        /// <returns>Expression tree</returns>
+        public IQueryable<T> AllReadonly<T>(Expression<Func<T, bool>> search) where T : class, IDeletable
+        {
+            return DbSet<T>()
+                .Where(t => !t.IsDeleted)
+                .Where(search)
+                .AsNoTracking();
+        }
+
+        /// <summary>
+        /// All records in a table including ones marked as deleted.
+        /// The result collection won't be tracked by the context.
+        /// </summary>
+        /// <returns>Expression tree</returns>
+        public IQueryable<T> AllWithDeletedReadonly<T>(Expression<Func<T, bool>> search) where T : class, IDeletable
+        {
+            return DbSet<T>()
+                .Where(search)
+                .AsNoTracking();
+        }
+
+        /// <summary>
+        /// All records in a table marked as deleted.
+        /// The result collection won't be tracked by the context.
+        /// </summary>
+        /// <returns>Expression tree</returns>
+        public IQueryable<T> AllDeletedReadonly<T>(Expression<Func<T, bool>> search) where T : class, IDeletable
+        {
+            return DbSet<T>()
+                .Where(t => t.IsDeleted)
                 .Where(search)
                 .AsNoTracking();
         }
@@ -112,7 +213,7 @@ namespace Daskalo.Infrastructure.Data.DataRepository
             this.DbSet<T>().RemoveRange(entities);
         }
 
-        public void DeleteRange<T>(Expression<Func<T, bool>> deleteWhereClause) where T : class
+        public void DeleteRange<T>(Expression<Func<T, bool>> deleteWhereClause) where T : class, IDeletable
         {
             var entities = All<T>(deleteWhereClause);
             DeleteRange(entities);

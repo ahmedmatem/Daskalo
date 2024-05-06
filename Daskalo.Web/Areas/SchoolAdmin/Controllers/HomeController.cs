@@ -1,8 +1,6 @@
 ﻿using Daskalo.Core.Contracts;
 using Daskalo.Web.Extensions;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using NuGet.DependencyResolver;
 
 namespace Daskalo.Web.Areas.SchoolAdmin.Controllers
 {

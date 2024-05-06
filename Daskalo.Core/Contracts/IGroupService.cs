@@ -1,4 +1,6 @@
 ﻿
+using Daskalo.Infrastructure.Data.Models;
+
 namespace Daskalo.Core.Contracts
 {
     public interface IGroupService
@@ -13,5 +15,12 @@ namespace Daskalo.Core.Contracts
         /// </summary>
         /// <param name="schoolid">The schooll unique identifier.</param>
         Task<int> GetGroupsCountInSchoolAsync(string schoolid);
+
+        /// <summary>
+        /// Gets all groups in the school.
+        /// </summary>
+        /// <param name="schoolId">School unique identifier.</param>
+        /// <returns>Returns list of all groups in the school excluding deleted ones.</returns>
+        Task<IEnumerable<Group>> AllAsync(string schoolId);
     }
 }

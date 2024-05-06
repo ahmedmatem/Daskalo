@@ -41,8 +41,8 @@ namespace Daskalo.Core.Services
         /// <returns>Returns all schools excluding deleted ones.</returns>
         public async Task<IEnumerable<School>> AllAsync()
         {
-            return await repository.AllReadonly<School>()
-                .Where(s => !s.IsDeleted)
+            return await repository
+                .AllReadonly<School>()
                 .Include(s => s.SchoolAdmin)
                 .ToListAsync();
         }
@@ -53,8 +53,8 @@ namespace Daskalo.Core.Services
         /// <returns>Returns all deleted schools.</returns>
         public async Task<IEnumerable<School>> AllBlockedAsync()
         {
-            return await repository.AllReadonly<School>()
-                .Where(s => s.IsDeleted)
+            return await repository
+                .AllDeletedReadonly<School>()
                 .Include(s => s.SchoolAdmin)
                 .ToListAsync();
         }
@@ -65,8 +65,8 @@ namespace Daskalo.Core.Services
         /// <returns>Returns the number of all blocked(deleted) schools.</returns>
         public async Task<int> GetBlockedSchoolsCountAsync()
         {
-            return await repository.AllReadonly<School>()
-                .Where(s => s.IsDeleted)
+            return await repository
+                .AllDeletedReadonly<School>()
                 .CountAsync();
         }
 
@@ -86,8 +86,8 @@ namespace Daskalo.Core.Services
         /// <returns>Returns the number of all school excluding deleted ones.</returns>
         public async Task<int> GetSchoolsCountAsync()
         {
-            return await repository.AllReadonly<School>()
-                .Where(s => !s.IsDeleted)
+            return await repository
+                .AllReadonly<School>()
                 .CountAsync();
         }
 
