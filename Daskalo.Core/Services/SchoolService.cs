@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System.Security.Claims;
-using static Daskalo.Core.Claims.UserClaims;
+using static Daskalo.Core.Constants.UserClaimsConstants;
 
 namespace Daskalo.Core.Services
 {
@@ -110,12 +110,10 @@ namespace Daskalo.Core.Services
                 var result = await userManager.AddToRoleAsync(teacher, "SchoolAdmin");
                 if (result.Succeeded)
                 {
-                    // Add custom user claims.
-                    await userManager.AddClaimsAsync(teacher, new[]
-                    {
-                        new Claim(ActivationStatusClaim.Key, ActivationStatusClaim.Value),
-                        new Claim(SchoolIdentifierClaim, teacher.SchoolId)
-                    });
+                    // Add school id in user claims.
+                    await userManager.AddClaimAsync(
+                        teacher, 
+                        new Claim(SchoolIdentifierClaim, teacher.SchoolId));
 
                     // Update school with SchoolAdmin teacher.
                     school.SchoolAdmin = teacher;

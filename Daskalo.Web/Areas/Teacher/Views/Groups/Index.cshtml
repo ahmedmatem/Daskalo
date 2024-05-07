@@ -1,0 +1,40 @@
+﻿@* @model IEnumerable<GroupCardViewModel>
+
+@{
+    ViewData["Title"] = "Моите групи";
+}
+
+<div class="text-end">
+    <a class="btn btn-primary" asp-action="Add">Създай група</a>
+</div>
+<h3 class="text-center text-secondary">@ViewData["Title"]</h3>
+
+<div class="row justify-content-center align-items-center">
+    @if (Model.Any())
+    {
+        @foreach (var item in Model)
+        {
+            <div class="col-sm-4 col-md-2 mt-4">
+                <div class="card align-items-center">
+                    <img src="@item.IconUrl" class="card-img-top w-50 h-50 p-2" alt="Icon">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">@item.ShortName</h5>
+                        <a asp-action="Group" asp-route-id="@item.Id" class="btn btn-sm btn-primary">Виж</a>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <div class="alert alert-primary text-center" role="alert">
+            Няма създадени групи.
+        </div>
+    }
+</div> *@
+
+
+<div class="alert alert-primary text-center" role="alert">
+    Няма създадени групи.
+</div>
+

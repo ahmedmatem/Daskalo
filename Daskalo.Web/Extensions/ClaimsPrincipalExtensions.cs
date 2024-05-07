@@ -1,5 +1,5 @@
 ﻿using System.Security.Claims;
-using static Daskalo.Core.Claims.UserClaims;
+using static Daskalo.Core.Constants.UserClaimsConstants;
 
 namespace Daskalo.Web.Extensions
 {
