@@ -29,7 +29,6 @@
     <Folder Include="Areas\SchoolAdmin\ViewModels\" />
     <Folder Include="Areas\Teacher\Data\" />
     <Folder Include="Areas\Teacher\Models\" />
-    <Folder Include="Filters\" />
   </ItemGroup>
 
 </Project>

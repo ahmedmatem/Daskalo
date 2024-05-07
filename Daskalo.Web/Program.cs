@@ -1,5 +1,6 @@
 using Daskalo.Web.AutoMapperProfiles;
 using Daskalo.Web.Extensions;
+using Daskalo.Web.Filters;
 using Microsoft.AspNetCore.Mvc;
 using static Daskalo.Infrastructure.Data.Constants.AdministratorConstants;
 
