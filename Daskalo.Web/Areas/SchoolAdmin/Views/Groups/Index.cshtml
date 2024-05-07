@@ -1,4 +1,4 @@
-﻿@* @model IEnumerable<GroupTableRowServiceModel>
+﻿@model IEnumerable<Group>
 
 @{
     ViewData["Title"] = "Всички групи";
@@ -31,12 +31,12 @@
                     {
                         <tr class="@(item.IsDeleted ? "text-secondary" : "")">
                             <td>@item.Name</td>
-                            <td>@item.GroupOwnerName</td>
+                            <td>@item.Teacher</td>
                             <td class="text-center">
                                 @if (item.IsDeleted)
                                 {
                                     <a asp-action="Start"
-                                       asp-route-id="@item.GroupId"
+                                       asp-route-id="@item.Id"
                                        asp-route-schoolId="@item.SchoolId"
                                        class="text-success" title="Старт">
                                         <i class="fa-solid fa-play"></i>
@@ -45,7 +45,7 @@
                                 else
                                 {
                                     <a asp-action="Stop"
-                                       asp-route-id="@item.GroupId"
+                                       asp-route-id="@item.Id"
                                        asp-route-schoolId="@item.SchoolId"
                                        class="text-danger" title="Стоп">
                                         <i class="fa-solid fa-pause"></i>
@@ -67,4 +67,4 @@ else
 }
 
 
-<partial name="_FontAwesomePartial" /> *@
+<partial name="_FontAwesomePartial" />

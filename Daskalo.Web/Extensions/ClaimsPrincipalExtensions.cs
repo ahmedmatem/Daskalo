@@ -10,9 +10,13 @@ namespace Daskalo.Web.Extensions
             return user.FindFirstValue(ClaimTypes.NameIdentifier);
         }
 
-        public static string? SchoolId(this ClaimsPrincipal user)
+        public static string SchoolId(this ClaimsPrincipal user)
         {
-            return user.Claims.FirstOrDefault(c => c.Type == SchoolIdentifierClaim)?.Value;
+            return user
+                .Claims
+                .FirstOrDefault(c => c.Type == SchoolIdentifierClaim)?
+                .Value 
+                ?? string.Empty;
         }
     }
 }
