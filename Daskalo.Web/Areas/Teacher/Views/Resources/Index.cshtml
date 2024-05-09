@@ -1,0 +1,47 @@
+﻿@model IEnumerable<TopicResource>
+
+@using static Daskalo.Web.Constants.ResourceConstants
+
+@{
+    ViewData["Title"] = "Моите ресурси";
+}
+
+<div class="text-end">
+    <a class="btn btn-primary" asp-action="Add">Създай ресурс</a>
+</div>
+
+<h3 class="text-center text-secondary">@ViewData["Title"]</h3>
+
+
+<div class="row justify-content-center align-items-center mt-3">
+    @if (Model.Any())
+    {
+        <ul class="list-group">
+            @foreach (var res in Model)
+            {
+                <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-start">
+                    @Html.Raw(ResourceIconRef[res.Icon])
+                    <a href="@res.Link" target="_blank" class="ms-2 me-auto text-secondary">
+                        <div class="fw-bold">@res.TextToDisplay</div>
+                        @res.Link
+                    </a>
+                    <a class="text-secondary m-2" title="Редактирай"
+                       asp-action="Edit" asp-route-id="@res.Id">
+                        <i class="fa-regular fa-pen-to-square"></i>
+                    </a>
+                    <a class="text-secondary m-2" title="Изтрий"
+                       asp-action="Delete" asp-route-id="@res.Id">
+                        <i class="fa-regular fa-trash-can"></i>
+                    </a>
+                </li>
+            }
+        </ul>
+    }
+    else
+    {
+        <partial name="_NoContentPartial" model="@("Няма създадени ресурси.")" />
+    }
+</div>
+
+<partial name="_FontAwesomePartial" />
+
