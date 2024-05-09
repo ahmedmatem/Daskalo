@@ -18,6 +18,7 @@ namespace Daskalo.Web
 
             builder.Services.AddControllersWithViews(options =>
             {
+                options.Filters.Add<UnblockedUserActionFilter>();
                 options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
             });
 

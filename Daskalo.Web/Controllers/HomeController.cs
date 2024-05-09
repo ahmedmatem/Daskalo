@@ -13,11 +13,6 @@ namespace Daskalo.Web.Controllers
             _logger = logger;
         }
 
-        public IActionResult NotActive()
-        {
-            return View();
-        }
-
         public IActionResult Index()
         {
             return View();

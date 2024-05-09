@@ -11,24 +11,28 @@ namespace Daskalo.Web.Filters
     /// <summary>
     /// A global filter that allow only active user access.
     /// </summary>
-    public class OnlyActiveUserAttribute : ActionFilterAttribute
+    public class UnblockedUserActionFilter : IAsyncActionFilter
     {
-        public override async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
+        public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
             var userManager = context.HttpContext
-                .RequestServices.GetService<UserManager<ApplicationUser>>();
+                .RequestServices
+                .GetService<UserManager<ApplicationUser>>();
 
             string userId = context.HttpContext.User.Id();
             var user = await userManager.FindByIdAsync(userId);
 
             if (user != null && user.IsDeleted)
             {
-                context.Result = new RedirectToRouteResult(new RouteValueDictionary
+                var signInManager = context.HttpContext
+                    .RequestServices
+                    .GetService<SignInManager<ApplicationUser>>();
+                await signInManager.SignOutAsync();
+
+                context.Result = new ViewResult()
                 {
-                    { "area", "Default"},
-                    { "controller", "Home"},
-                    { "action", "NotActive"}
-                });
+                    ViewName = "~/Views/Shared/BlockedUser.cshtml",
+                };
             }
             else
             {

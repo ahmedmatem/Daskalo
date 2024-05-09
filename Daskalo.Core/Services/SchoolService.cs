@@ -93,8 +93,7 @@ namespace Daskalo.Core.Services
 
         /// <summary>
         /// Adds administrator to the school. 
-        /// Using custom user claims sssigns School identifier and add
-        /// user activated claim.
+        /// Using custom user claims assigns School identifier.
         /// </summary>
         /// <param name="schoolId">School unique identifier which the teacher becomes administrator on.</param>
         /// <param name="teacherId">Unique identifier of the teacher who will become administrator.</param>
@@ -112,7 +111,7 @@ namespace Daskalo.Core.Services
                 {
                     // Add school id in user claims.
                     await userManager.AddClaimAsync(
-                        teacher, 
+                        teacher,
                         new Claim(SchoolIdentifierClaim, teacher.SchoolId));
 
                     // Update school with SchoolAdmin teacher.
