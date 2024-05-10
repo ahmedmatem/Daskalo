@@ -1,4 +1,5 @@
-﻿using Daskalo.Core.Contracts;
+﻿using Azure.Storage.Blobs;
+using Daskalo.Core.Contracts;
 using Daskalo.Core.Services;
 using Daskalo.Infrastructure.Data;
 using Daskalo.Infrastructure.Data.DataRepository;
@@ -17,6 +18,7 @@ namespace Daskalo.Web.Extensions
             services.AddScoped<IGroupService, GroupService>();
             services.AddScoped<IStudentService, StudentService>();
             services.AddScoped<ITopicResourceService, TopicResourceService>();
+            services.AddScoped<ITopicResourceStorageService, TopicResourceStorageService>();
 
             return services;
         }
@@ -29,6 +31,9 @@ namespace Daskalo.Web.Extensions
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(connectionString))
                 .AddDatabaseDeveloperPageExceptionFilter();
+
+            services.AddSingleton(x => new BlobServiceClient(
+                configuration.GetValue<string>("ConnectionStrings:AzureStorageConnectionString")));
 
             services.AddScoped<IRepository, Repository>();
 

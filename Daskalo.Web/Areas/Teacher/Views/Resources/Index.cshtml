@@ -20,7 +20,7 @@
             @foreach (var res in Model)
             {
                 <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-start">
-                    @Html.Raw(ResourceIconRef[res.Icon])
+                    @Html.Raw(ResourceIconRefs[res.Icon])
                     <a href="@res.Link" target="_blank" class="ms-2 me-auto text-secondary">
                         <div class="fw-bold">@res.TextToDisplay</div>
                         @res.Link

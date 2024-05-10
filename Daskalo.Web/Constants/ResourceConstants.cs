@@ -2,7 +2,7 @@
 {
     public static class ResourceConstants
     {
-        public static Dictionary<string, string> ResourceIconRef = new Dictionary<string, string>()
+        public static Dictionary<string, string> ResourceIconRefs = new Dictionary<string, string>()
         {
             { "default", "<i class=\"fa-regular fa-file\"></i>"},
             { "excel", "<i class=\"fa-regular fa-file-excel\"></i>"},
