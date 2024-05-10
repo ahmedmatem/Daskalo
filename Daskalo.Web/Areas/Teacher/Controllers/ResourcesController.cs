@@ -53,7 +53,7 @@ namespace Daskalo.Web.Areas.Teacher.Controllers
 
             TempData[MessageSuccess] = "Ресурсът е добавен успешно.";
 
-            return View();
+            return RedirectToAction(nameof(Index));
         }
     }
 }
