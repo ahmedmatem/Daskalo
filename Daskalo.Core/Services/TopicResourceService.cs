@@ -1,5 +1,6 @@
 ﻿
 using Daskalo.Core.Contracts;
+using Daskalo.Core.Models.Common;
 using Daskalo.Infrastructure.Data.DataRepository;
 using Daskalo.Infrastructure.Data.Models;
 using Microsoft.AspNetCore.Http;
@@ -58,6 +59,23 @@ namespace Daskalo.Core.Services
         public async Task<TopicResource?> GetByIdAsync(string id)
         {
             return await repository.GetByIdAsync<TopicResource>(id);
+        }
+
+        /// <summary>
+        /// Extract text and value pair for topic resource select list. 
+        /// </summary>
+        /// <param name="ownerId">Owner unique identifier.</param>
+        /// <returns>Returns list of select list item.</returns>
+        public async Task<IEnumerable<SelectListItemServiceModel>> SelectListAsync(string ownerId)
+        {
+            return await repository
+                .AllReadonly<TopicResource>(r => r.OwnerId == ownerId)
+                .Select(r => new SelectListItemServiceModel
+                {
+                    Text = r.TextToDisplay,
+                    Value = r.Id
+                })
+                .ToListAsync();
         }
 
         /// <summary>

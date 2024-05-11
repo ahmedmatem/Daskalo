@@ -17,6 +17,7 @@ namespace Daskalo.Web.Extensions
             services.AddScoped<ITeacherService, TeacherService>();
             services.AddScoped<IGroupService, GroupService>();
             services.AddScoped<IStudentService, StudentService>();
+            services.AddScoped<ITopicService, TopicService>();
             services.AddScoped<ITopicResourceService, TopicResourceService>();
             services.AddScoped<ITopicResourceStorageService, TopicResourceStorageService>();
 

@@ -96,5 +96,12 @@ namespace Daskalo.Web.Areas.Teacher.Controllers
 
             return RedirectToAction(nameof(Index));
         }
+
+        [HttpGet]
+        public IActionResult Delete(string id)
+        {
+            // TODO: Implement topic resource deletion
+            return View();
+        }
     }
 }
