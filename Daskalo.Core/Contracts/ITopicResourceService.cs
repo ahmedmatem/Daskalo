@@ -26,6 +26,8 @@ namespace Daskalo.Core.Contracts
         /// <param name="id">Unique resource id.</param>
         Task<TopicResource?> GetByIdAsync(string id);
 
+        Task<IEnumerable<TopicResource>> GetAllByIdsAsync(params string[] ids);
+
         /// <summary>
         /// Update topic resource.
         /// </summary>

@@ -24,9 +24,7 @@ namespace Daskalo.Web
 
             builder.Services.AddApplicationServices();
 
-            builder.Services.AddAutoMapper(
-                typeof(SchoolAutoMapperProfile),
-                typeof(TopicResourceAutoMapperProfile));
+            builder.Services.AddApplicationMapper();
 
             var app = builder.Build();
 

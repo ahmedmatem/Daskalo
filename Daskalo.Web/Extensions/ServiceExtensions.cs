@@ -4,6 +4,7 @@ using Daskalo.Core.Services;
 using Daskalo.Infrastructure.Data;
 using Daskalo.Infrastructure.Data.DataRepository;
 using Daskalo.Infrastructure.Data.Models;
+using Daskalo.Web.AutoMapperProfiles;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -20,6 +21,16 @@ namespace Daskalo.Web.Extensions
             services.AddScoped<ITopicService, TopicService>();
             services.AddScoped<ITopicResourceService, TopicResourceService>();
             services.AddScoped<ITopicResourceStorageService, TopicResourceStorageService>();
+
+            return services;
+        }
+
+        public static IServiceCollection AddApplicationMapper(this IServiceCollection services)
+        {
+            services.AddAutoMapper(
+                typeof(SchoolAutoMapperProfile),
+                typeof(TopicResourceAutoMapperProfile),
+                typeof(TopicAutoMapperProfile));
 
             return services;
         }

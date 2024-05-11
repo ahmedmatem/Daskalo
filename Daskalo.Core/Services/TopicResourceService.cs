@@ -52,6 +52,13 @@ namespace Daskalo.Core.Services
                 .ToListAsync();
         }
 
+        public async Task<IEnumerable<TopicResource>> GetAllByIdsAsync(params string[] ids)
+        {
+            return await repository
+                .AllReadonly<TopicResource>(r => ids.Contains(r.Id))
+                .ToListAsync();
+        }
+
         /// <summary>
         /// Retrieve topic resource entity by its id.
         /// </summary>

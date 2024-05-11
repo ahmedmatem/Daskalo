@@ -8,9 +8,9 @@ namespace Daskalo.Web.AutoMapperProfiles
     {
         public TopicResourceAutoMapperProfile()
         {
-            CreateMap<ResourceFormViewModel, TopicResource>().ForMember(
-                dest => dest.Id, 
-                opt => opt.NullSubstitute(Guid.NewGuid().ToString()))
+            CreateMap<ResourceFormViewModel, TopicResource>()
+                .ForMember(dest => dest.Id, opt => 
+                    opt.NullSubstitute(Guid.NewGuid().ToString()))
                 .ReverseMap();
         }
     }
