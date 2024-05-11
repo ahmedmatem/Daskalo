@@ -51,6 +51,25 @@ namespace Daskalo.Core.Services
                 .ToListAsync();
         }
 
+        /// <summary>
+        /// Retrieve topic resource entity by its id.
+        /// </summary>
+        /// <param name="id">Unique resource id.</param>
+        public async Task<TopicResource?> GetByIdAsync(string id)
+        {
+            return await repository.GetByIdAsync<TopicResource>(id);
+        }
+
+        /// <summary>
+        /// Update topic resource.
+        /// </summary>
+        /// <param name="model">The topic resource will be updated.</param>
+        public async Task UpdateAsync(TopicResource model)
+        {
+            repository.Update(model);
+            await repository.SaveChangesAsync<TopicResource>();
+        }
+
         private string GetRandomBlobName(IFormFile file)
         {
             return Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);

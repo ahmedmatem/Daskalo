@@ -18,5 +18,17 @@ namespace Daskalo.Core.Contracts
         /// <param name="topicResource">Topic resource service model.</param>
         /// <param name="file">Topic resource file.</param>
         Task AddAsync(TopicResource topicResource, IFormFile? file);
+
+        /// <summary>
+        /// Retrieve topic resource entity by its id.
+        /// </summary>
+        /// <param name="id">Unique resource id.</param>
+        Task<TopicResource?> GetByIdAsync(string id);
+
+        /// <summary>
+        /// Update topic resource.
+        /// </summary>
+        /// <param name="model">The topic resource will be updated.</param>
+        Task UpdateAsync(TopicResource model);
     }
 }

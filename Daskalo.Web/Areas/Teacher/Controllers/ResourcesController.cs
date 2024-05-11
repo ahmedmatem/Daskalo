@@ -6,6 +6,7 @@ using static Daskalo.Web.Constants.ResourceConstants;
 using static Daskalo.Core.Constants.ToastMessageConstants;
 using AutoMapper;
 using Daskalo.Infrastructure.Data.Models;
+using Elfie.Serialization;
 
 namespace Daskalo.Web.Areas.Teacher.Controllers
 {
@@ -52,6 +53,46 @@ namespace Daskalo.Web.Areas.Teacher.Controllers
             await resourceService.AddAsync(topicResource, model.ResourceFile);
 
             TempData[MessageSuccess] = "Ресурсът е добавен успешно.";
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(string id)
+        {
+            var topicResource = await resourceService.GetByIdAsync(id);
+            if(topicResource == null || topicResource.OwnerId != User.Id())
+            {
+                return BadRequest();
+            }
+
+            var model = mapper.Map<ResourceFormViewModel>(topicResource);
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(TopicResource model)
+        {
+            var topicResource = await resourceService.GetByIdAsync(model.Id);
+            if (topicResource == null 
+                || model.OwnerId != User.Id()
+                || ResourceIconRefs.Keys.Contains(model.Icon) == false)
+            {
+                return BadRequest();
+            }
+
+            topicResource.TextToDisplay = model.TextToDisplay;
+            if (topicResource.Link.Contains(storageService.ContainerUrl) == false)
+            {
+                // Link is not a blob.
+                topicResource.Link = model.Link;
+            }
+            topicResource.Icon = model.Icon;
+
+            await resourceService.UpdateAsync(topicResource);
+
+            TempData[MessageSuccess] = "Ресурсът е променен успешно.";
 
             return RedirectToAction(nameof(Index));
         }

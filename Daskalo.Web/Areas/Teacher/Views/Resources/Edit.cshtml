@@ -1,16 +1,20 @@
 ﻿@model ResourceFormViewModel
 
+@inject ITopicResourceStorageService resourceStorage
+
 @using static Daskalo.Web.Constants.ResourceConstants
 @using static Daskalo.Web.Extensions.ClaimsPrincipalExtensions
 
 @{
-    ViewData["Title"] = "Създаване на ресурс";
+    ViewData["Title"] = "Редактиране на ресурс";
+    // Indicates if resource links to an endpoint or to a file 
+    bool isBlob = Model.Link.Contains(resourceStorage.ContainerUrl);
 }
 
 <nav class="d-flex" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
-            <a asp-action=""><i class="fa-solid fa-arrow-left"></i> Моите ресурси</a>
+            <a asp-action=""><i class="fa-solid fa-arrow-left"></i> Назад</a>
         </li>
     </ol>
 </nav>
@@ -19,7 +23,7 @@
 
 <div class="row justify-content-center">
     <div class="p-3 col-md-6">
-        <form asp-action="Add" method="post" enctype="multipart/form-data">
+        <form asp-action="Edit" method="post" enctype="multipart/form-data">
             <input type="hidden" name="OwnerId" value="@User.Id()" />
             <div class="form-floating">
                 <input asp-for="TextToDisplay" class="form-control" aria-required="true" />
@@ -28,19 +32,27 @@
             </div>
 
             <div class="btn-group mt-3" role="group" aria-label="Basic radio toggle button group">
-                <input type="radio" class="btn-check" name="btnradio" id="file-radio-btn" autocomplete="off" checked>
+                <input type="radio" class="btn-check" name="btnradio" id="file-radio-btn" autocomplete="off" @(isBlob ? "checked" : "")>
                 <label asp-for="ResourceFile" class="btn btn-outline-secondary" for="file-radio-btn"></label>
 
-                <input type="radio" class="btn-check" name="btnradio" id="link-radio-btn" autocomplete="off">
+                <input type="radio" class="btn-check" name="btnradio" id="link-radio-btn" autocomplete="off" @(isBlob ? "" : "checked")>
                 <label asp-for="Link" class="btn btn-outline-secondary" for="link-radio-btn"></label>
             </div>
 
-            <div id="file-holder-id" class="form-group mt-3">
-                <input asp-for="ResourceFile" class="form-control mt-1" type="file" />
-                <span asp-validation-for="ResourceFile" class="text-danger"></span>
+            <div id="file-holder-id" class="form-group mt-3" @(isBlob ? "" : "hidden")>
+                <span class="mt-1">
+                    Ресурсен файл не може да се редактира.
+                </span>
             </div>
-            <div id="link-holder-id" class="form-group mt-3" hidden>
-                <input asp-for="Link" class="form-control mt-1" />
+            <div id="link-holder-id" class="form-group mt-3" @(isBlob ? "hidden" : "")>
+                @if (isBlob)
+                {
+                    <input asp-for="Link" class="form-control mt-1" disabled />
+                }
+                else
+                {
+                    <input asp-for="Link" class="form-control mt-1" />
+                }
                 <span asp-validation-for="Link" class="text-danger"></span>
             </div>
 
@@ -70,7 +82,7 @@
 
             <div class="text-center mt-4">
                 <a asp-action="" class="btn btn-outline-secondary">Отказ</a>
-                <button type="submit" class="btn btn-primary">Създай</button>
+                <button type="submit" class="btn btn-primary">Запази</button>
             </div>
         </form>
     </div>
