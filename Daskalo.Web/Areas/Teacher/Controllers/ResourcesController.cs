@@ -41,7 +41,7 @@ namespace Daskalo.Web.Areas.Teacher.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add(ResourceFormViewModel model)
+        public async Task<IActionResult> Add(TopicResourceFormViewModel model)
         {
             if (model.OwnerId != User.Id()
                 || ResourceIconRefs.Keys.Contains(model.Icon) == false)
@@ -66,7 +66,7 @@ namespace Daskalo.Web.Areas.Teacher.Controllers
                 return BadRequest();
             }
 
-            var model = mapper.Map<ResourceFormViewModel>(topicResource);
+            var model = mapper.Map<TopicResourceFormViewModel>(topicResource);
 
             return View(model);
         }

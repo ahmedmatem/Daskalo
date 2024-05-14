@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Daskalo.Infrastructure.Data.Models;
+using System.ComponentModel.DataAnnotations;
 using static Daskalo.Infrastructure.Data.Constants.DataConstants;
 using static Daskalo.Infrastructure.Data.Constants.ErrorMessages;
 
@@ -33,6 +34,12 @@ namespace Daskalo.Web.Areas.Teacher.Models.Topic
         public string Contents { get; set; } = string.Empty;
 
         public string CreatorId { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Collection of topic resources.
+        /// </summary>
+        [Display(Name = "Ресурси")]
+        public IEnumerable<TopicResource> Resources { get; set; } = new List<TopicResource>();
 
         /// <summary>
         /// Keeps selected resources for topic create by a teacher.

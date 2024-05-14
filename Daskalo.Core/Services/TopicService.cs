@@ -40,5 +40,13 @@ namespace Daskalo.Core.Services
                 .AllReadonly<Topic>(t => t.CreatorId == creatorId)
                 .ToListAsync();
         }
+
+        public async Task<Topic?> GetByIdAsync(string id)
+        {
+            return await repository
+                .AllReadonly<Topic>(t => t.Id == id)
+                .Include(t => t.Resources)
+                .FirstOrDefaultAsync();
+        }
     }
 }

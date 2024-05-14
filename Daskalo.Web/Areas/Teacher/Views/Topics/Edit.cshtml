@@ -1,0 +1,123 @@
+﻿@using static Daskalo.Web.Constants.ResourceConstants
+@using static Daskalo.Infrastructure.Data.Constants.DataConstants
+
+@model TopicFormViewModel
+
+@{
+    ViewData["Title"] = "Редактиране на тема";
+    // All topic resources by creator
+    var creatorAllTopicResources = (ViewData["CreatorAllTopicResorces"]
+        as List<SelectListItemServiceModel>)
+        ?? Enumerable.Empty<SelectListItemServiceModel>();
+    // All topic resources by creator except resources already added to the topic.
+    var allResourcesExeptAdded =
+        creatorAllTopicResources.ExceptBy<SelectListItemServiceModel, string>(
+            Model.Resources.Select(x => x.Id),
+            x => x.Value);
+}
+
+<nav class="d-flex" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a asp-action=""><i class="fa-solid fa-arrow-left"></i> Назад</a>
+        </li>
+    </ol>
+</nav>
+
+<h3 class="text-center text-secondary">@ViewData["Title"]</h3>
+
+<div class="row justify-content-center">
+    <div class="p-3 col-md-6">
+        <form asp-action="Edit" method="post">
+            <input type="hidden" name="CreatorId" value="@Model.CreatorId" />
+            <div class="form-floating">
+                <input asp-for="Name" class="form-control" aria-required="true" />
+                <label asp-for="Name" class="form-label"></label>
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-floating mt-2">
+                <textarea asp-for="Description" class="form-control" aria-required="true"></textarea>
+                <label asp-for="Description" class="form-label"></label>
+                <span asp-validation-for="Description" class="text-danger"></span>
+                <span class="text-secondary">Максимален брой символи - @TopicDescriptionMaxLength</span>
+            </div>
+            <div class="form-floating mt-2">
+                <textarea asp-for="Contents" class="form-control" aria-required="true"></textarea>
+                <label asp-for="Contents" class="form-label"></label>
+                <span class="text-secondary">Въведете всяка точка от съдържанието на нов ред.</span>
+            </div>
+
+            <div class="form-group mt-3">
+                <label asp-for="SelectedResources" class="form-label"></label>
+                @if (Model.Resources.Count() != 0)
+                {
+                    <div class="row mb-1">
+                        @foreach (var res in Model.Resources)
+                        {
+                            <div id="@res.Id">
+                                @Html.Raw(ResourceIconRefs[res.Icon])&nbsp;@res.TextToDisplay
+                                <button name="delete"
+                                        data-res-id="@res.Id"
+                                        data-text-to-display="@res.TextToDisplay"
+                                        class="btn btn-sm btn-light float-end"
+                                        title="Изтрий">
+                                    <i data-itemid="@res.Id" class="fa-regular fa-trash-can"></i>
+                                </button>
+                            </div>
+                        }
+                    </div>
+                }
+                <select asp-for="SelectedResources" class="form-select form-select mb-3" multiple aria-label=".form-select-lg example">
+                    <option selected>Изберете ресурс ...</option>
+                    @foreach (var res in allResourcesExeptAdded)
+                    {
+                        <option value="@res.Value">@res.Text</option>
+                    }
+                </select>
+            </div>
+
+            <div class="text-center mt-4">
+                <a asp-action="" class="btn btn-outline-secondary">Отказ</a>
+                <button type="submit" class="btn btn-primary">Запази</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <partial name="_FontAwesomePartial" />
+    <script>
+        var myModal = document.getElementById('#success-modal')
+
+        $(document).ready(function () {
+
+            $('button[name="delete"]').click(function (e) {
+                e.preventDefault()
+
+                const textToDisplay = $(this).data('text-to-display')
+                const resourceId = $(this).data('res-id')
+                const topicId = '@Model.Id'
+                const creatorId = '@Model.CreatorId'
+
+                const data = { resourceId, topicId, creatorId }
+
+                $.get("../DeleteResourceFromTopicAjax",
+                    data, function (data) {
+                        // show success message
+                        message.success(data.message)
+
+                        // remove resource from the list of added resources
+                        $('#' + resourceId).remove()
+
+                        // append deleted resource as an option in the select element
+                        let optionHTML = `
+                                            <option value="${resourceId}">
+                                                ${textToDisplay}
+                                            </option>`
+                        $('select[name="SelectedResources"]').append(optionHTML)
+                    }, 'json')
+            })
+        })
+    </script>
+}

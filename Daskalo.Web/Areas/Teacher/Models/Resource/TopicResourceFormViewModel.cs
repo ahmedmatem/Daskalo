@@ -4,7 +4,7 @@ using static Daskalo.Infrastructure.Data.Constants.ErrorMessages;
 
 namespace Daskalo.Web.Areas.Teacher.Models.Resource
 {
-    public class ResourceFormViewModel
+    public class TopicResourceFormViewModel
     {
         /// <summary>
         /// Unique identifier of an owner(a teacher) of the topic resource.

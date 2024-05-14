@@ -1,16 +1,19 @@
-﻿@using Daskalo.Core.Models.Common
-@model TopicFormViewModel
+﻿@model TopicFormViewModel
 
 @{
     ViewData["Title"] = "Създаване на тема";
-    var topicResourceSelectList = (ViewData["TopicResourceSelectList"] as List<SelectListItemServiceModel>)
-    ?? Enumerable.Empty<SelectListItemServiceModel>();
+    var topicResourceSelectList = (ViewData["TopicResourceSelectList"]
+        as List<SelectListItemServiceModel>)
+        ?? Enumerable.Empty<SelectListItemServiceModel>();
 }
 
-<nav class="d-flex" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+<nav class="d-flex" style="--bs-breadcrumb-divider: '>';"
+     aria-label="breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
-            <a asp-action="" class="link-success"><i class="fa-solid fa-arrow-left"></i> Моите теми</a>
+            <a asp-action="" class="link-success">
+                <i class="fa-solid fa-arrow-left"></i> Моите теми
+            </a>
         </li>
     </ol>
 </nav>
