@@ -9,6 +9,8 @@ namespace Daskalo.Web.AutoMapperProfiles
     {
         public TopicAutoMapperProfile()
         {
+            CreateMap<Topic, TopicViewModel>();
+
             CreateMap<TopicFormViewModel, Topic>()
                 .ForMember(dest => dest.Id, opt =>
                     opt.MapFrom(src => string.IsNullOrEmpty(src.Id) ? Guid.NewGuid().ToString() : src.Id))

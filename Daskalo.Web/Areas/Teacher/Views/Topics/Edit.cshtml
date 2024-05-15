@@ -104,17 +104,23 @@
 
                 $.get("../DeleteResourceFromTopicAjax",
                     data, function (data) {
-                        // show success message
-                        message.success(data.message)
+                        if (data.success) {
+                            // show success message
+                            message.success(data.message)
+                        }
+                        else {
+                            // show error message
+                            message.error(data.message)
+                        }
 
                         // remove resource from the list of added resources
                         $('#' + resourceId).remove()
 
                         // append deleted resource as an option in the select element
                         let optionHTML = `
-                                            <option value="${resourceId}">
-                                                ${textToDisplay}
-                                            </option>`
+                                                    <option value="${resourceId}">
+                                                        ${textToDisplay}
+                                                    </option>`
                         $('select[name="SelectedResources"]').append(optionHTML)
                     }, 'json')
             })

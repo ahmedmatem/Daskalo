@@ -36,7 +36,7 @@ namespace Daskalo.Web.Areas.Teacher.Controllers
         public async Task<IActionResult> Add()
         {
             TopicFormViewModel model = new TopicFormViewModel();
-            ViewData["TopicResourceSelectList"] = 
+            ViewData["TopicResourceSelectList"] =
                 await topicResourceService.SelectListAsync(User.Id()!);
 
             return View(model);
@@ -45,7 +45,7 @@ namespace Daskalo.Web.Areas.Teacher.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(TopicFormViewModel model)
         {
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return View(model);
             }
@@ -67,7 +67,7 @@ namespace Daskalo.Web.Areas.Teacher.Controllers
         public async Task<IActionResult> Edit(string id)
         {
             var topic = await topicService.GetByIdAsync(id);
-            if(topic == null || topic.CreatorId != User.Id())
+            if (topic == null || topic.CreatorId != User.Id())
             {
                 return NotFound();
             }
@@ -75,6 +75,72 @@ namespace Daskalo.Web.Areas.Teacher.Controllers
             ViewData["CreatorAllTopicResorces"] =
                 await topicResourceService.SelectListAsync(User.Id()!);
             var model = mapper.Map<TopicFormViewModel>(topic);
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(TopicFormViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var topic = await topicService.GetByIdAsync(model.Id);
+            if (topic == null)
+            {
+                return NotFound();
+            }
+
+            var selectedTopicResources = await topicResourceService
+                .GetAllByIdsAsync(model.SelectedResources.ToArray());
+
+            mapper.Map(model, topic);
+            topic.Resources.AddRange(selectedTopicResources);
+
+            await topicService.UpdateAsync(topic);
+
+            TempData[MessageSuccess] = "Темата беше променена успешно.";
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpGet]
+        public async Task<JsonResult> DeleteResourceFromTopicAjax(
+            string topicId,
+            string creatorId,
+            string resourceId)
+        {
+            if(creatorId != User.Id())
+            {
+                return new JsonResult(new { message = "Заявката е невалидна и не може да бъде обработена.", success = false });
+            }
+
+            bool isDeleted = await topicService
+                .DeleteTopicResourceFromTopicAsync(topicId, resourceId);
+            string message;
+            if (isDeleted)
+            {
+                message = "Ресурсът е премахнат успешно от темата.";
+            }
+            else
+            {
+                message = "Възникна грешка при премахването на ресурс.";
+            }
+
+            return new JsonResult(new { message, success = isDeleted });
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Topic(string id)
+        {
+            var topic = await topicService.GetByIdAsync(id);
+            if(topic == null)
+            {
+                return BadRequest();
+            }
+            var model = mapper.Map<TopicViewModel>(topic);
 
             return View(model);
         }

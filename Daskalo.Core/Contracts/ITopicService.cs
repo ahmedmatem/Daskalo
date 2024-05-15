@@ -12,5 +12,9 @@ namespace Daskalo.Core.Contracts
         Task AddAsync(Topic topic);
 
         Task AddTopicAndResourcesAsync(string topicId, params string[] topicResourceIds);
+
+        Task UpdateAsync(Topic modifiedTopic);
+
+        Task<bool> DeleteTopicResourceFromTopicAsync(string topicId, string topicResourceId);
     }
 }

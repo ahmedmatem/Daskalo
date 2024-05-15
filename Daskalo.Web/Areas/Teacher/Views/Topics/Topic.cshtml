@@ -1,0 +1,63 @@
+﻿@model TopicViewModel
+
+@using static Daskalo.Infrastructure.Data.Constants.DataConstants
+@using static Daskalo.Web.Constants.ResourceConstants
+
+@{
+    ViewData["Title"] = Model.Name;
+}
+
+<nav class="d-flex" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a asp-action=""><i class="fa-solid fa-arrow-left"></i> Всички теми</a>
+        </li>
+    </ol>
+</nav>
+
+<h3 class="text-center text-secondary">Тема</h3>
+
+<div class="card">
+    <h5 class="card-header text-center">@ViewData["Title"]</h5>
+    <div class="row card-body">
+        <div class="col-lg-6">
+            <h5 class="card-title d-inline-block">
+                <label asp-for="Contents" class="form-label"></label>
+            </h5>
+            @foreach (var contentsItem in @Model.Contents.Split(Environment.NewLine))
+            {
+                <p class="card-text">
+                    @contentsItem
+                </p>
+            }
+        </div>
+
+        <div class="col-lg-6">
+            <h5 class="card-title d-inline-block">
+                <label asp-for="Resources" class="form-label"></label>
+            </h5>
+            @if (Model.Resources.Count() == 0)
+            {
+                <partial name="_NoContentPartial" model="@("Няма добавени ресурси към темата.")" />
+            }
+            else
+            {
+                foreach (var resModel in @Model.Resources)
+                {
+                    <p class="card-text">
+                        @Html.Raw(@ResourceIconRefs[resModel.Icon]) @resModel.TextToDisplay
+                    </p>
+                }
+            }
+        </div>
+    </div>
+    <div class="card-footer">
+        <a asp-action="Edit" asp-route-id="@Model.Id"
+           class="btn btn-sm btn-outline-primary">
+            <i class="fa-regular fa-pen-to-square"></i> Промени
+        </a>
+    </div>
+</div>
+
+<partial name="_ValidationScriptsPartial" />
+<partial name="_FontAwesomePartial" />

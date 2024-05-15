@@ -41,12 +41,35 @@ namespace Daskalo.Core.Services
                 .ToListAsync();
         }
 
+        public async Task<bool> DeleteTopicResourceFromTopicAsync(string topicId, string topicResourceId)
+        {
+            var resource = await repository
+                .GetByIdAsync<TopicAndResource>(new[]
+                {
+                    topicId, topicResourceId
+                });
+            if (resource != null)
+            {
+                repository.Delete(resource);
+                await repository.SaveChangesAsync<TopicAndResource>();
+                return true;
+            }
+
+            return false;
+        }
+
         public async Task<Topic?> GetByIdAsync(string id)
         {
             return await repository
                 .AllReadonly<Topic>(t => t.Id == id)
                 .Include(t => t.Resources)
                 .FirstOrDefaultAsync();
+        }
+
+        public async Task UpdateAsync(Topic modifiedTopic)
+        {
+            repository.Update(modifiedTopic);
+            await repository.SaveChangesAsync<Topic>();
         }
     }
 }
