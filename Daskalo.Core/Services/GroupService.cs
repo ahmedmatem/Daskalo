@@ -28,6 +28,18 @@ namespace Daskalo.Core.Services
         }
 
         /// <summary>
+        /// Queries all groups by creator.
+        /// </summary>
+        /// <param name="creatorId">The group creator.</param>
+        /// <returns>Returns list of all cretor groups.</returns>
+        public async Task<IEnumerable<Group>> AllByCreatorAsync(string creatorId)
+        {
+            return await repository
+                .AllReadonly<Group>(g => g.TeacherId == creatorId)
+                .ToListAsync();
+        }
+
+        /// <summary>
         /// Gets the count of all groups in all schools,
         /// excluding ones marked as deleted.
         /// </summary>

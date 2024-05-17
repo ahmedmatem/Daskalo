@@ -29,7 +29,8 @@ namespace Daskalo.Web.Extensions
         {
             services.AddAutoMapper(
                 typeof(SchoolAutoMapperProfile),
-                typeof(TopicAutoMapperProfile));
+                typeof(TopicAutoMapperProfile),
+                typeof(GroupAutoMapperProfile));
 
             return services;
         }

@@ -22,5 +22,12 @@ namespace Daskalo.Core.Contracts
         /// <param name="schoolId">School unique identifier.</param>
         /// <returns>Returns list of all groups in the school excluding deleted ones.</returns>
         Task<IEnumerable<Group>> AllAsync(string schoolId);
+
+        /// <summary>
+        /// Queries all groups by creator.
+        /// </summary>
+        /// <param name="creatorId">The group creator.</param>
+        /// <returns>Returns list of all cretor groups.</returns>
+        Task<IEnumerable<Group>> AllByCreatorAsync(string creatorId);
     }
 }
