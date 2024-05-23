@@ -35,5 +35,7 @@
         public const int QuizQuestionTextMinLength = 0;
 
         public const int OptionMessageMaxLength = 150;
+
+        public const long PostedFileMaxSizeInBytes = 50 * 1024; // 50KB
     }
 }

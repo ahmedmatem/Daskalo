@@ -27,7 +27,13 @@ namespace Daskalo.Core.Contracts
         /// Queries all groups by creator.
         /// </summary>
         /// <param name="creatorId">The group creator.</param>
-        /// <returns>Returns list of all cretor groups.</returns>
+        /// <returns>Returns list of all creator groups.</returns>
         Task<IEnumerable<Group>> AllByCreatorAsync(string creatorId);
+
+        /// <summary>
+        /// Add entity asynchronously.
+        /// </summary>
+        /// <param name="group">Entity to add.</param>
+        Task<bool> AddAsync(Group group);
     }
 }

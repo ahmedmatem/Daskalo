@@ -16,6 +16,25 @@ namespace Daskalo.Core.Services
         }
 
         /// <summary>
+        /// Add entity asynchronously.
+        /// </summary>
+        /// <param name="group">Entity to add.</param>
+        public async Task<bool> AddAsync(Group group)
+        {
+            try
+            {
+                await repository.AddAsync(group);
+                await repository.SaveChangesAsync<Group>();
+            }
+            catch (DbUpdateException)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        /// <summary>
         /// Gets all groups in the school excluding marled as deleted.
         /// </summary>
         /// <param name="schoolId">School unique identifier.</param>
@@ -31,7 +50,7 @@ namespace Daskalo.Core.Services
         /// Queries all groups by creator.
         /// </summary>
         /// <param name="creatorId">The group creator.</param>
-        /// <returns>Returns list of all cretor groups.</returns>
+        /// <returns>Returns list of all cretaor groups.</returns>
         public async Task<IEnumerable<Group>> AllByCreatorAsync(string creatorId)
         {
             return await repository

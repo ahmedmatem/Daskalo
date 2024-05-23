@@ -8,7 +8,11 @@ namespace Daskalo.Web.AutoMapperProfiles
     {
         public GroupAutoMapperProfile()
         {
-            CreateMap<GroupCardViewModel, Group>();
+            CreateMap<GroupCardViewModel, Group>().ReverseMap();
+
+            CreateMap<GroupFormViewModel, Group>()
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(
+                    src => string.IsNullOrEmpty(src.Id) ? Guid.NewGuid().ToString() : src.Id));
         }
     }
 }

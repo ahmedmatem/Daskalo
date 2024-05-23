@@ -10,6 +10,7 @@
 
         public const string FileITypeErrorMessage = "Грешен тип на файл: {0}.";
         public const string FileISizeErrorMessage = "Размерът на файла трябва да е до {0}KB.";
+        public const string FileISizeZeroErrorMessage = "Файлът е празен.";
 
     }
 }

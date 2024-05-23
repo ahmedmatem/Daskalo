@@ -1,7 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations;
-using static Daskalo.Infrastructure.Data.Constants.DataConstants;
-
+﻿
 namespace Daskalo.Web.Areas.Teacher.Models.Group
 {
     public class GroupCardViewModel
